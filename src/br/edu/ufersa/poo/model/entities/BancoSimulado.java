@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BancoSimulado {
+	public static int idGenerator = 0;
+	
 	public static List<Livro> livros = new ArrayList<>();
 	public static List<Disco> discos = new ArrayList<>();
 	public static List<Cliente> clientes = new ArrayList<>();
