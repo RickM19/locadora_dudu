@@ -11,54 +11,62 @@ public class Livro {
 	private int qtdExemplares;
 	private int qtdDisponivelAluguel;
 	private double valorAluguel;
-
+	
+	
+	//Getters
+	public int getId() {
+		return id;
+	}
+	public String getTitulo() {
+		return titulo;
+	}
+	public String getAutor() {
+		return autor;
+	}
+	public int getAnoPublicacao() {
+		return anoPublicacao;
+	}
+	public String getGenero() {
+		return genero;
+	}
+	public int getQtdPaginas() {
+		return qtdPaginas;
+	}
+	public double getValorAluguel() {
+		return valorAluguel;
+	}
+	
+	
+	
+	//Setters
 	public void setId(int id) {
 		if (id >= 0) {
 			this.id = id;
 		}
-	}
-	public int getId() {
-		return id;
 	}
 	public void setTitulo(String titulo) {
 		if (titulo != null && titulo.length() != 0) {
 			this.titulo = titulo;
 		}
 	}
-	public String getTitulo() {
-		return titulo;
-	}
 	public void setAutor(String autor) {
 		if (autor != null && autor.length() != 0) {
 			this.autor = autor;
 		}
 	}
-	public String getAutor() {
-		return autor;
-	}
-
 	public void setAnoPublicacao(int anoPublicacao) {
 		if (anoPublicacao > 0)
 			this.anoPublicacao = anoPublicacao;
-	}
-	public int getAnoPublicacao() {
-		return anoPublicacao;
 	}
 	public void setGenero(String genero) {
 		if (genero != null && genero.length() != 0) {
 			this.genero = genero;
 		}
 	}
-	public String getGenero() {
-		return genero;
-	}
 	public void setQtdPaginas(int qtdPaginas) {
 		if (qtdPaginas > 0) {
 			this.qtdPaginas = qtdPaginas;
 		}
-	}
-	public int getQtdPaginas() {
-		return qtdPaginas;
 	}
 	public void setQtdExemplares(int qtdExemplares) {
 		if (qtdExemplares > 0) {
@@ -70,9 +78,7 @@ public class Livro {
 			this.valorAluguel = valorAluguel;
 		}
 	}
-	public double getValorAluguel() {
-		return valorAluguel;
-	}
+	
 
 	public Livro(
 			int id, 
@@ -146,7 +152,5 @@ public class Livro {
 				l.setQtdExemplares(novaQtd);
 			}		
 		}
-		
 	}
-
 }
