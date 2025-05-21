@@ -41,6 +41,8 @@ public class Usuario {
 	public  void setSenha(String senha) {
 		if(senha != null && !senha.isEmpty())
 			this.senha = senha;
+		else
+			System.out.println("A senha é um campo obrigatório!");
 	}
 	public void setIsAdmin(String nomeUsuario) {
 		if(nomeUsuario != null && nomeUsuario.equals("Dudu"))
@@ -57,25 +59,29 @@ public class Usuario {
 	}
 
 	public void cadastrarUsuario(String nomeUsuario, String email, String senha) {
-		boolean exists = false;
 		for (Usuario u : BancoSimulado.usuarios) {
 			boolean isSame = u.getNomeUsuario().equals(nomeUsuario);
-			if (isSame)
-				exists = true;
+			if (isSame) {
+				System.out.println("Ja existe um usuário cadastrado com esse nome!");
+				return;
+			}
+				
 		}
-		
-		if(!exists) {
 			int id = BancoSimulado.idGenerator;
 			Usuario novoUser = new Usuario(id, nomeUsuario, email, senha);
 			BancoSimulado.usuarios.add(novoUser);
 			BancoSimulado.idGenerator++;
-		}
+			System.out.println("Cadastro realizado com sucesso!");
 	}
 	
 	public void excluirUsuario(int id) {
-		if(id >= 0) {
-			BancoSimulado.usuarios.removeIf(u -> u.getId() == id);
+		if(id < 0) {
+			System.out.println("ID inválido!");
+			return;
 		}
+		
+		BancoSimulado.usuarios.removeIf(u -> u.getId() == id);
+		System.out.println("Usuário excluido com sucesso!");
 	}
 	
 	public void alterarSenha(String novaSenha) {

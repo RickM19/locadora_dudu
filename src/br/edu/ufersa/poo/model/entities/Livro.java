@@ -113,44 +113,60 @@ public class Livro {
 			double valorAluguel
 			) 
 	{
-		boolean exists = false;
 		for (Livro l : BancoSimulado.livros) {
 			boolean isSame = l.getTitulo().equals(titulo) && l.getAutor().equals(autor);
-			if (isSame)
-				exists = true;
+			if (isSame) {
+				System.out.println("Esse livro ja está cadastrado!");
+				return;
+			}
+				
 		}
-
-		if (!exists) {
 			int id = BancoSimulado.idGenerator;
 			Livro novoLivro = new Livro(id, titulo,autor, anoPublicacao, genero, qtdPaginas, qtdExemplares, valorAluguel);
 			BancoSimulado.livros.add(novoLivro);
 			BancoSimulado.idGenerator++;
-		}
+			System.out.println("Livro cadastrado com sucesso!");
 	}
 	
 	public void alugar() {
-		if(qtdDisponivelAluguel > 0) {
-			qtdDisponivelAluguel--;
+		if(qtdDisponivelAluguel <= 0) {
+			System.out.println("Quantidade de Livros insuficiente para aluguel!");
+			return;
 		}
+		qtdDisponivelAluguel--;
+		System.out.println("Livro alugado com sucesso!");
 	}
 	
 	public void devolver() {
 		if(qtdDisponivelAluguel < qtdExemplares) {
 			qtdDisponivelAluguel++;
+			System.out.println("Livro devolvido com sucesso!");
 		}
 	}
 	
 	public void excluirLivro(int id) {
-		if(id >= 0) {
-			BancoSimulado.livros.removeIf(l -> l.getId() == id);
+		if(id < 0) {
+			System.out.println("ID inválido!");
+			return;
 		}
+		BancoSimulado.livros.removeIf(l -> l.getId() == id);BancoSimulado.livros.removeIf(l -> l.getId() == id);
+		System.out.println("Livro Excluido!");
+		
 	}
 	
 	public void alterarEstoque(int id, int novaQtd) {
+		boolean exists = false;
 		for(Livro l: BancoSimulado.livros) {
 			if(l.getId() == id) {
 				l.setQtdExemplares(novaQtd);
+				exists = true;
+				System.out.println("Estoque alterado!");
+				return;
 			}		
+		}
+		
+		if(!exists) {
+			System.out.println("Livro não encontrado!");
 		}
 	}
 }
