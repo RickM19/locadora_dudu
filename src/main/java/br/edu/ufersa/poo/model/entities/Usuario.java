@@ -58,33 +58,4 @@ public class Usuario {
 		setIsAdmin(nomeUsuario);
 	}
 
-	public void cadastrarUsuario(String nomeUsuario, String email, String senha) {
-		for (Usuario u : BancoSimulado.usuarios) {
-			boolean isSame = u.getNomeUsuario().equals(nomeUsuario);
-			if (isSame) {
-				System.out.println("Ja existe um usuário cadastrado com esse nome!");
-				return;
-			}
-				
-		}
-			int id = BancoSimulado.idGenerator;
-			Usuario novoUser = new Usuario(id, nomeUsuario, email, senha);
-			BancoSimulado.usuarios.add(novoUser);
-			BancoSimulado.idGenerator++;
-			System.out.println("Cadastro realizado com sucesso!");
-	}
-	
-	public void excluirUsuario(int id) {
-		if(id < 0) {
-			System.out.println("ID inválido!");
-			return;
-		}
-		
-		BancoSimulado.usuarios.removeIf(u -> u.getId() == id);
-		System.out.println("Usuário excluido com sucesso!");
-	}
-	
-	public void alterarSenha(String novaSenha) {
-		setSenha(senha);
-	}
 }
