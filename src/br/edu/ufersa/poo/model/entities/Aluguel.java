@@ -60,4 +60,39 @@ public class Aluguel {
 	}
 	
 	//Métodos
+	public void cadastrarAluguel(int idAluguel, int idCliente, String dataInicio, String dataFim, double valorTotal) {
+		for (Aluguel a : BancoSimulado.alugueis) {
+			if (a.getIdAluguel() == idAluguel && a.getIdCliente() == idCliente) {
+				System.out.println("Esse aluguel já está cadastrado.");
+				return;
+			}
+				
+		}
+		Aluguel novoAluguel = new Aluguel(idAluguel, idCliente, dataInicio, dataFim, valorTotal, false);
+		BancoSimulado.alugueis.add(novoAluguel);
+		System.out.println("Novo aluguel cadastrado com sucesso!");
+	}
+	
+	public void calcularValorTotal(double valorAluguel) {
+		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        java.time.LocalDate inicio = java.time.LocalDate.parse(dataInicio, formatter);
+        java.time.LocalDate fim = java.time.LocalDate.parse(dataFim, formatter);
+
+        long dias = java.time.temporal.ChronoUnit.DAYS.between(inicio, fim);
+        if (dias <= 0) {
+            throw new IllegalArgumentException("A data de fim deve ser depois da data de início.");
+        }
+        this.valorTotal = dias * valorAluguel;
+    }
+	
+	public void finalizar(int id) {
+		if (this.idAluguel == id) {
+            this.finalizado = true;
+            System.out.println("Aluguel " + id + " finalizado.");
+        }
+		else {
+            System.out.println("ID do aluguel não confere.");
+        }
+	}
+	
 }
