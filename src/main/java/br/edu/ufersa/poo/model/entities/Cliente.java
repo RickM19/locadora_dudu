@@ -37,27 +37,6 @@ public class Cliente {
 	}
 	
 	//metodos
-	public void cadastrar(String nome, String cpf, String endereco){
-		for(Cliente c: BancoSimulado.clientes){
-			if(c.getCpf().equals(cpf)){
-				System.out.println("Cliente existente.");
-				return;
-				}
-			}
-		Cliente novoCliente=new Cliente(nome,cpf,endereco);
-		BancoSimulado.clientes.add(novoCliente);
-		System.out.println("Novo cliente " + novoCliente.getNome() + " cadastrado.");
-	}
 
-	public void excluir(String cpf){
-		if (cpf == null) {
-	        System.out.println("CPF inválido.");
-	        return;
-	        }
-		boolean removido = BancoSimulado.clientes.removeIf(c -> c.getCpf().equals(cpf));
-		if(removido)
-			System.out.println("CPF " + cpf + " removido.");
-		
-		}
 	
 }

@@ -52,16 +52,5 @@ public class ItemAlugado {
 	}
 	
 	//Métodos
-	public void cadastrarItemAlugado(int idAluguel, int idItem, boolean tipo, String nomeItem, double valorAluguel) {
-		for (ItemAlugado i : BancoSimulado.itensAlugados) {
-			if (i.getIdAluguel() == idAluguel && i.getIdItem() == idItem) {
-				System.out.println("Esse item já está cadastrado.");
-				return;
-			}
-				
-		}
-		ItemAlugado novoItem = new ItemAlugado(idAluguel, idItem, tipo, nomeItem, valorAluguel);
-		BancoSimulado.itensAlugados.add(novoItem);
-		System.out.println("Item cadastrado com sucesso!");
-	}
+
 }
