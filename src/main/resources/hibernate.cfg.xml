@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+        <session-factory>
+            <property name="hibernate.dialect">
+                org.hibernate.dialect.MySQLDialect
+            </property>
+            <property name="hibernate.connection.driver_class">
+                com.mysql.cj.jdbc.Driver
+            </property>
+            <property name="hibernate.connection.url">
+            jdbc:mysql://localhost:3306/poo?useSSL=false&amp;serve
+            rTimezone=UTC
+            </property>
+            <property name="hibernate.connection.username">root</property>
+            <property name="hibernate.connection.password"> </property>
+    </session-factory>
+    <mapping class="br.edu.ufersa.poo.model.entities.Usuario"/>
+    <mapping class="br.edu.ufersa.poo.model.entities.Disco"/>
+    <mapping class="br.edu.ufersa.poo.model.entities.Aluguel"/>
+    <mapping class="br.edu.ufersa.poo.model.entities.Cliente"/>
+    <mapping class="br.edu.ufersa.poo.model.entities.ItemAlugado"/>
+    <mapping class="br.edu.ufersa.poo.model.entities.Livro"/>
+</hibernate-configuration>
