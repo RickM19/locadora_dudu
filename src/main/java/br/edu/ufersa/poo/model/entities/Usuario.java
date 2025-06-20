@@ -1,14 +1,30 @@
 package br.edu.ufersa.poo.model.entities;
 
+import br.edu.ufersa.poo.model.enums.TipoUsuario;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="Usuarios")
 public class Usuario {
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@Column(nullable = false, length = 30)
 	private String nomeUsuario;
+
+	@Column(nullable = false, length = 50)
 	private String email;
+
+	@Column(nullable = false, length = 30)
 	private String senha;
-	private boolean isAdmin;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	private TipoUsuario tipoUsuario;
 	
 	//Getters
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public String getNomeUsuario() {
@@ -20,42 +36,40 @@ public class Usuario {
 	public String getSenha() {
 		return senha;
 	}
-	public boolean getIsAdmin() {
-		return isAdmin;
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
 	}
 	
 	//Setters
-	public void setId(int id) {
-		if(id >= 0)
-			this.id = id;
-	}
-	
+
 	public void setNomeUsuario(String nomeUsuario) {
-		if(nomeUsuario != null && !nomeUsuario.isEmpty())
-			this.nomeUsuario = nomeUsuario;
+		if(nomeUsuario == null || nomeUsuario.isEmpty())
+			throw new IllegalArgumentException("Nome de usuário é obrigatório!");
+		this.nomeUsuario = nomeUsuario;
 	}
 	public void setEmail(String email) {
-		if(email != null && !email.isEmpty())
-			this.email = email;
+		if(email == null || email.isEmpty())
+			throw new IllegalArgumentException("O Email é um campo obrigatório!");
+		this.email = email;
 	}
 	public  void setSenha(String senha) {
-		if(senha != null && !senha.isEmpty())
-			this.senha = senha;
-		else
-			System.out.println("A senha é um campo obrigatório!");
+		if(senha == null || senha.isEmpty())
+			throw new IllegalArgumentException("A senha é um campo obrigatório!");
+		this.senha = senha;
 	}
-	public void setIsAdmin(String nomeUsuario) {
-		if(nomeUsuario != null && nomeUsuario.equals("Dudu"))
-			isAdmin = true;
+	public void setTipoUsuario(String nomeUsuario) {
+		if(nomeUsuario == null || nomeUsuario.equals("Dudu"))
+			tipoUsuario = TipoUsuario.ADMIN;
 		else
-			isAdmin = false;
+			tipoUsuario = TipoUsuario.COMUM;
 	}
-	public Usuario(int id, String nomeUsuario, String email, String senha) {
-		setId(id);
+	public Usuario(){};
+
+	public Usuario(String nomeUsuario, String email, String senha) {
 		setNomeUsuario(nomeUsuario);
 		setEmail(email);
 		setSenha(senha);
-		setIsAdmin(nomeUsuario);
+		setTipoUsuario(nomeUsuario);
 	}
 
 }
