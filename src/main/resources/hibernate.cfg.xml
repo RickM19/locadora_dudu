@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <hibernate-configuration>
         <session-factory>
             <property name="hibernate.dialect">
@@ -8,16 +8,16 @@
                 com.mysql.cj.jdbc.Driver
             </property>
             <property name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/poo?useSSL=false&amp;serve
-            rTimezone=UTC
+            jdbc:mysql://localhost:3306/poo?useSSL=false&amp;serverTimezone=UTC
             </property>
             <property name="hibernate.connection.username">root</property>
             <property name="hibernate.connection.password"> </property>
+            <property name="hibernate.hbm2ddl.auto">update</property>
+            <mapping class="br.edu.ufersa.poo.model.entities.Usuario"/>
+            <mapping class="br.edu.ufersa.poo.model.entities.Livro"/>
+            <mapping class="br.edu.ufersa.poo.model.entities.Cliente"/>
+            <mapping class="br.edu.ufersa.poo.model.entities.Disco"/>
+            <mapping class="br.edu.ufersa.poo.model.entities.ItemAlugado"/>
+            <mapping class="br.edu.ufersa.poo.model.entities.Aluguel"/>
     </session-factory>
-    <mapping class="br.edu.ufersa.poo.model.entities.Usuario"/>
-    <mapping class="br.edu.ufersa.poo.model.entities.Disco"/>
-    <mapping class="br.edu.ufersa.poo.model.entities.Aluguel"/>
-    <mapping class="br.edu.ufersa.poo.model.entities.Cliente"/>
-    <mapping class="br.edu.ufersa.poo.model.entities.ItemAlugado"/>
-    <mapping class="br.edu.ufersa.poo.model.entities.Livro"/>
 </hibernate-configuration>
