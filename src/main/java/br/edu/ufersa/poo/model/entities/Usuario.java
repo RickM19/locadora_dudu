@@ -50,6 +50,7 @@ public class Usuario {
 	public void setEmail(String email) {
 		if(email == null || email.isEmpty())
 			throw new IllegalArgumentException("O Email é um campo obrigatório!");
+		this.email = email;
 	}
 	public  void setSenha(String senha) {
 		if(senha == null || senha.isEmpty())
@@ -64,7 +65,7 @@ public class Usuario {
 	}
 	public Usuario(){};
 
-	public Usuario(int id, String nomeUsuario, String email, String senha) {
+	public Usuario(String nomeUsuario, String email, String senha) {
 		setNomeUsuario(nomeUsuario);
 		setEmail(email);
 		setSenha(senha);
