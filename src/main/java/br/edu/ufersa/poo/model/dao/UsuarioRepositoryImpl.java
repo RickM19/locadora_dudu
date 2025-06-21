@@ -1,52 +1,86 @@
 package br.edu.ufersa.poo.model.dao;
 
 import br.edu.ufersa.poo.model.entities.Usuario;
-import br.edu.ufersa.poo.util.HibernateUtil;
+import br.edu.ufersa.poo.util.JPAUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import jakarta.persistence.TypedQuery;
+
 
 import java.util.List;
 
 public class UsuarioRepositoryImpl implements UsuarioRepository {
-    private static final SessionFactory sf = HibernateUtil.getSessionFactory();
+    private final EntityManagerFactory emf = JPAUtil.getEntityManagerFactory();
 
     @Override
     public Usuario findById(long id) {
-        try(EntityManager em = sf.createEntityManager()) {
+        try(EntityManager em = emf.createEntityManager()) {
             return em.find(Usuario.class, id);
+        } catch (Throwable e) {
+            System.err.println("Falha ao criar o EntityManager " + e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public List<Usuario> findAll() {
-        try(EntityManager em = sf.createEntityManager()) {
+        try(EntityManager em = emf.createEntityManager()) {
             return em.createQuery("FROM Usuario", Usuario.class).getResultList();
+        } catch (Throwable e) {
+            System.err.println("Falha ao criar o EntityManager " + e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void save(Usuario u) {
-
+        try(EntityManager em = emf.createEntityManager()) {
+            EntityTransaction ts = em.getTransaction();
+            ts.begin();
+            em.persist(u);
+            ts.commit();
+        } catch (Throwable e) {
+            System.err.println("Falha ao criar o EntityManager " + e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void update(Usuario u) {
-
+        try(EntityManager em = emf.createEntityManager()) {
+            EntityTransaction ts = em.getTransaction();
+            ts.begin();
+            em.merge(u);
+            ts.commit();
+        } catch (Throwable e) {
+            System.err.println("Falha ao criar o EntityManager " + e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void delete(Usuario u) {
-
+        try(EntityManager em = emf.createEntityManager()) {
+            EntityTransaction ts = em.getTransaction();
+            ts.begin();
+            em.remove(em.contains(u) ? u : em.merge(u));
+            ts.commit();
+        } catch (Throwable e) {
+            System.err.println("Falha ao criar o EntityManager " + e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void findByUserName(String userName) {
-
+    public Usuario findByUserName(String userName) {
+        try(EntityManager em = emf.createEntityManager()) {
+            TypedQuery<Usuario> q = em.createQuery("SELECT u from Usuario WHERE u.nomeUsuario = :e", Usuario.class);
+            q.setParameter("e", userName);
+            return q.getResultStream().findFirst().orElse(null);
+        } catch (Throwable e) {
+            System.err.println("Falha ao criar o EntityManager " + e);
+            throw new RuntimeException(e);
+        }
     }
-
-    @Override
-    public Usuario findById()
-
 }

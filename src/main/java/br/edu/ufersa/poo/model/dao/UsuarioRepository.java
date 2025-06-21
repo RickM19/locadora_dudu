@@ -10,7 +10,6 @@ public interface UsuarioRepository {
     void save(Usuario u);
     void update(Usuario u);
     void delete(Usuario u);
-    void findByUserName(String userName);
+    Usuario findByUserName(String userName);
 
-    Usuario findById()
 }
