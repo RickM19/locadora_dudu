@@ -1,40 +1,26 @@
 package br.edu.ufersa.poo;
 
-import br.edu.ufersa.poo.model.entities.Livro;
+
 import br.edu.ufersa.poo.model.entities.Usuario;
-import br.edu.ufersa.poo.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import br.edu.ufersa.poo.util.JPAUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+
 // classe teste
 public class Main {
     public static void main(String[] args) {
-        SessionFactory sf = HibernateUtil.getSessionFactory();
-
-        try (Session session = sf.openSession()) {
-            Transaction tx = session.beginTransaction();
-            Usuario user = new Usuario("João", "jodbc@gmail.com", "1234abc");
-            session.persist(user);
+        EntityManagerFactory emf = JPAUtil.getEntityManagerFactory();
+        try(EntityManager em = emf.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            Usuario u = new Usuario("Dudu", "Dudu1234@gmail.com", "abc132");
+            em.persist(u);
             tx.commit();
-            System.out.println("ID gerado: " + user.getId());
-            session.close();
-        }
+            System.out.println("ID GERADO: " + u.getId());
 
-        try(Session session = sf.openSession()) {
-           Transaction tx = session.beginTransaction();
-           Livro livro = new Livro();
-           livro.setAutor("Shakespeare");
-           livro.setAnoPublicacao(2000);
-           livro.setCategoria("Romance");
-           livro.setTitulo("Romeu e Julieta");
-           livro.setQtdPaginas(200);
-           livro.setQtdExemplares(3);
-           livro.setQtdDisponivelAluguel(3);
-           livro.setValorAluguel(20);
-           session.persist(livro);
-           tx.commit();
-           System.out.println("ID gerado: " + livro.getId());
-           session.close();
+
         }
+        JPAUtil.shutdown();
     }
 }
