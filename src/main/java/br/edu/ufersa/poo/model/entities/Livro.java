@@ -1,106 +1,64 @@
 package br.edu.ufersa.poo.model.entities;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
-public class Livro {
-	private int id;
-	private String titulo;
+@Entity
+@DiscriminatorValue("LIVRO")
+public class Livro extends Produto {
+	@Column(nullable = true)
 	private int anoPublicacao;
-	private String genero;
+
+	@Column(nullable = true, length = 40)
 	private String autor;
+
+	@Column(nullable = true)
 	private int qtdPaginas;
-	private int qtdExemplares;
-	private int qtdDisponivelAluguel;
-	private double valorAluguel;
-	
-	
+
 	//Getters
-	public int getId() {
-		return id;
-	}
-	public String getTitulo() {
-		return titulo;
-	}
 	public String getAutor() {
 		return autor;
 	}
 	public int getAnoPublicacao() {
 		return anoPublicacao;
 	}
-	public String getGenero() {
-		return genero;
-	}
-	public int getQtdPaginas() {
-		return qtdPaginas;
-	}
-	public double getValorAluguel() {
-		return valorAluguel;
-	}
-	
-	
+	public int getQtdPaginas() { return qtdPaginas; }
 	
 	//Setters
-	public void setId(int id) {
-		if (id >= 0) {
-			this.id = id;
-		}
-	}
-	public void setTitulo(String titulo) {
-		if (titulo != null && titulo.length() != 0) {
-			this.titulo = titulo;
-		}
-	}
 	public void setAutor(String autor) {
-		if (autor != null && autor.length() != 0) {
-			this.autor = autor;
-		}
+		if (autor == null || autor.isEmpty())
+			throw new IllegalArgumentException("O autor é um campo obrigatório!");
+		this.autor = autor;
+
+
 	}
 	public void setAnoPublicacao(int anoPublicacao) {
-		if (anoPublicacao > 0)
-			this.anoPublicacao = anoPublicacao;
-	}
-	public void setGenero(String genero) {
-		if (genero != null && genero.length() != 0) {
-			this.genero = genero;
-		}
+		if (anoPublicacao <= 0)
+			throw new IllegalArgumentException("Ano de publicação inválido!");
+		this.anoPublicacao = anoPublicacao;
 	}
 	public void setQtdPaginas(int qtdPaginas) {
-		if (qtdPaginas > 0) {
-			this.qtdPaginas = qtdPaginas;
-		}
-	}
-	public void setQtdExemplares(int qtdExemplares) {
-		if (qtdExemplares > 0) {
-			this.qtdExemplares = qtdExemplares;
-		}
-	}
-	public void setValorAluguel(double valorAluguel) {
-		if (valorAluguel > 0) {
-			this.valorAluguel = valorAluguel;
-		}
-	}
-	
+		if (qtdPaginas <= 0)
+			throw new IllegalArgumentException("Quantidade de páginas precisa ser maior que zero!");
+		this.qtdPaginas = qtdPaginas;
 
+	}
+	public Livro(){};
 	public Livro(
-			int id, 
 			String titulo, 
 			String autor, 
 			int anoPublicacao, 
 			String genero, 
-			int qtdPaginas, 
-			int qtdExemplares, 
+			int qtdPaginas,
+			int qtdExemplares,
 			double valorAluguel
 			) 
 	{
-		setId(id);
-		setTitulo(titulo);
+		super(titulo, genero, qtdExemplares, valorAluguel);
 		setAutor(autor);
 		setAnoPublicacao(anoPublicacao);
-		setGenero(genero);
 		setQtdPaginas(qtdPaginas);
-		setQtdExemplares(qtdExemplares);
-		setValorAluguel(valorAluguel);
-		qtdDisponivelAluguel = this.qtdExemplares;
-
 	}
 
 

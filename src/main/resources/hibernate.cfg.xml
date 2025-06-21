@@ -19,5 +19,6 @@
             <mapping class="br.edu.ufersa.poo.model.entities.Disco"/>
             <mapping class="br.edu.ufersa.poo.model.entities.ItemAlugado"/>
             <mapping class="br.edu.ufersa.poo.model.entities.Aluguel"/>
+            <mapping class="br.edu.ufersa.poo.model.entities.Produto"/>
     </session-factory>
 </hibernate-configuration>
