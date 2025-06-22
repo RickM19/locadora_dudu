@@ -3,10 +3,7 @@ package br.edu.ufersa.poo.model.dao;
 import br.edu.ufersa.poo.model.entities.Cliente;
 import java.util.List;
 
-public interface ClienteRepository {
-    void salve(Cliente cliente);
-    void update(Cliente cliente);
-    void delete(Cliente cliente);
+public interface ClienteRepository extends GenericRepository<Cliente> {
     Cliente findByCpf(String cpf);
-    List<Cliente> findAll();
+    Cliente findByName(String nome);
 }

@@ -20,9 +20,19 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     @Override
+    public Cliente findByName(String nome){
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.find(Cliente.class, nome);
+        }catch (Throwable e) {
+            System.err.println("Falha ao criar EntityManager " + e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Cliente> findAll(){
         try (EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("FROM Cliente", Cliente.class).getResultList();
+            return em.createQuery("FROM Usuario", Cliente.class).getResultList();
         }catch (Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);
@@ -30,7 +40,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     @Override
-    public void salve(Cliente cliente){
+    public void save(Cliente cliente){
         try (EntityManager em = emf.createEntityManager()) {
             EntityTransaction ts = em.getTransaction();
             ts.begin();
