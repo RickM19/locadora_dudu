@@ -4,12 +4,7 @@ import br.edu.ufersa.poo.model.entities.Usuario;
 
 import java.util.List;
 
-public interface UsuarioRepository {
+public interface UsuarioRepository extends GenericRepository<Usuario> {
     Usuario findById(long id);
-    List<Usuario> findAll();
-    void save(Usuario u);
-    void update(Usuario u);
-    void delete(Usuario u);
     Usuario findByUserName(String userName);
-
 }

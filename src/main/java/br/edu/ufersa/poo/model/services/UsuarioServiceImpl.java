@@ -29,12 +29,12 @@ public class UsuarioServiceImpl implements UserService {
     }
 
     @Override
-    public List<Usuario> ListarTodos() {
+    public List<Usuario> listarTodos() {
         return usuarioRepo.findAll();
     }
 
     @Override
-    public void registrar(Usuario u) {
+    public void cadastrar(Usuario u) {
         if(usuarioRepo.findByUserName(u.getNomeUsuario()) != null) {
             throw new IllegalArgumentException("Usuário já cadastrado!");
         }

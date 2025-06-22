@@ -4,12 +4,10 @@ import br.edu.ufersa.poo.model.entities.Usuario;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends GenericService<Usuario> {
     void fazerLogin(String nome, String senha);
     void deslogar();
     Usuario buscarPorId(long id);
-    List<Usuario> ListarTodos();
-    void registrar(Usuario u);
     void alterarSenha(long id, String novaSenha);
     void excluir(long id);
 }
