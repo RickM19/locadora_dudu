@@ -3,11 +3,25 @@ package br.edu.ufersa.poo.model.services;
 import br.edu.ufersa.poo.model.dao.UsuarioRepository;
 import br.edu.ufersa.poo.model.dao.UsuarioRepositoryImpl;
 import br.edu.ufersa.poo.model.entities.Usuario;
+import br.edu.ufersa.poo.util.Session;
 
 import java.util.List;
 
 public class UsuarioServiceImpl implements UserService {
     private final UsuarioRepository usuarioRepo = new UsuarioRepositoryImpl();
+
+    @Override
+    public void fazerLogin(String nome, String senha) {
+        Usuario userEncontrado = usuarioRepo.findByUserName(nome);
+        if(userEncontrado == null || !userEncontrado.getSenha().equals(senha)) {
+            throw new IllegalArgumentException("Nome de usuário ou senha inválidos!");
+        }
+        Session.setUsuarioLogado(userEncontrado);
+    }
+
+    public void deslogar() {
+        Session.encerrarSessao();
+    }
 
     @Override
     public Usuario buscarPorId(long id) {

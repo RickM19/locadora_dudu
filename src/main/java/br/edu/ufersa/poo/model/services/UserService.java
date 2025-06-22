@@ -5,6 +5,8 @@ import br.edu.ufersa.poo.model.entities.Usuario;
 import java.util.List;
 
 public interface UserService {
+    void fazerLogin(String nome, String senha);
+    void deslogar();
     Usuario buscarPorId(long id);
     List<Usuario> ListarTodos();
     void registrar(Usuario u);
