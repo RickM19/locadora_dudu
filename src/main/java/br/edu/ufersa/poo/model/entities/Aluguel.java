@@ -1,25 +1,47 @@
 package br.edu.ufersa.poo.model.entities;
 
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity
+@Table(name="Alugueis")
 public class Aluguel {
 	//Atributos
-	private int idAluguel;
-	private int idCliente;
-	private String dataInicio;
-	private String dataFim;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long idAluguel;
+
+	@ManyToOne
+	@JoinColumn(name = "id_cliente", nullable = false)
+	private Cliente cliente;
+
+	@Column(nullable = false)
+	private LocalDate dataInicio;
+
+	@Column(nullable = false)
+	private LocalDate dataFim;
+
+	@Column(nullable = false)
 	private double valorTotal;
+
+	@Column(nullable = false)
 	private boolean finalizado;
-	
+
+	@OneToMany(mappedBy = "aluguel", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ItemAlugado> itensAlugados;
+
 	//Getters
-	public int getIdAluguel() {
+	public long getIdAluguel() {
 		return this.idAluguel;
 	}
-	public int getIdCliente() {
-		return this.idCliente;
+	public Cliente getCliente() {
+		return this.cliente;
 	}
-	public String getDataInicio() {
+	public LocalDate getDataInicio() {
 		return this.dataInicio;
 	}
-	public String getDataFim() {
+	public LocalDate getDataFim() {
 		return this.dataFim;
 	}
 	public double getValorTotal() {
@@ -28,35 +50,45 @@ public class Aluguel {
 	public boolean getFinalizado() {
 		return this.finalizado;
 	}
-	
+	public List<ItemAlugado> getItensAlugados() {
+		return itensAlugados;
+	}
+
 	//Setters
-	public void setIdAluguel(int idAluguel) {
-		if (idAluguel >= 0) this.idAluguel = idAluguel;
+	public void setCliente(Cliente cliente) {
+		if (cliente != null) this.cliente = cliente;
+		else throw new IllegalArgumentException("O id do cliente está vazio.");
 	}
-	public void setIdCliente(int idCliente) {
-		if (idCliente >= 0) this.idCliente = idCliente;
-	}
-	public void setDataInicio(String dataInicio) {
+	public void setDataInicio(LocalDate dataInicio) {
 		if (dataInicio != null) this.dataInicio = dataInicio;
+		else throw new IllegalArgumentException("A data de inicio está vazia.");
 	}
-	public void setDataFim(String dataFim) {
+	public void setDataFim(LocalDate dataFim) {
 		if (dataFim != null) this.dataFim = dataFim;
+		else throw new IllegalArgumentException("A data de fim está vazia.");
 	}
 	public void setValorTotal(double valorTotal) {
 		if (valorTotal >= 0) this.valorTotal = valorTotal;
+		else throw new IllegalArgumentException("O valor total está vazio");
 	}
 	public void setFinalizado(boolean finalizado) {
 		this.finalizado = finalizado;
 	}
-	
+	public void setItensAlugados(List<ItemAlugado> itensAlugados) {
+		if (itensAlugados != null && !itensAlugados.isEmpty()) this.itensAlugados = itensAlugados;
+		else throw new IllegalArgumentException("Os itens alugados estão vazios");
+	}
+
 	//Construtores
-	public Aluguel(int idAluguel, int idCliente, String dataInicio, String dataFim, double valorTotal, boolean finalizado) {
-		setIdAluguel(idAluguel);
-		setIdCliente(idCliente);
+	public Aluguel(){}
+	public Aluguel(Cliente cliente, LocalDate dataInicio, LocalDate dataFim, double valorTotal, boolean finalizado,
+				   List<ItemAlugado> itensAlugados) {
+		setCliente(cliente);
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
 		setValorTotal(valorTotal);
 		setFinalizado(finalizado);
+		setItensAlugados(itensAlugados);
 	}
 	
 	//Métodos
