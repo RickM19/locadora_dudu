@@ -1,5 +1,9 @@
 package br.edu.ufersa.poo.model.entities;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class Aluguel {
 	//Atributos
 	private int idAluguel;
@@ -74,11 +78,11 @@ public class Aluguel {
 	}
 	
 	public void calcularValorTotal(double valorAluguel) {
-		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        java.time.LocalDate inicio = java.time.LocalDate.parse(dataInicio, formatter);
-        java.time.LocalDate fim = java.time.LocalDate.parse(dataFim, formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+        LocalDate fim = LocalDate.parse(dataFim, formatter);
 
-        long dias = java.time.temporal.ChronoUnit.DAYS.between(inicio, fim);
+        long dias = ChronoUnit.DAYS.between(inicio, fim);
         if (dias <= 0) {
             throw new IllegalArgumentException("A data de fim deve ser depois da data de início.");
         }
@@ -93,6 +97,5 @@ public class Aluguel {
 		else {
             System.out.println("ID do aluguel não confere.");
         }
-	}
-	
+	}	
 }

@@ -36,7 +36,7 @@ public class ItemAlugado {
 		this.tipo = tipo;
 	}
 	public void setNomeItem(String nomeItem) {
-		if(nomeItem != null) this.nomeItem = nomeItem;
+		if(nomeItem != null && !nomeItem.isEmpty()) this.nomeItem = nomeItem;
 	}
 	public void setValorAluguel(double valorAluguel) {
 		if(valorAluguel >= 0) this.valorAluguel = valorAluguel;
@@ -58,10 +58,9 @@ public class ItemAlugado {
 				System.out.println("Esse item já está cadastrado.");
 				return;
 			}
-				
 		}
 		ItemAlugado novoItem = new ItemAlugado(idAluguel, idItem, tipo, nomeItem, valorAluguel);
 		BancoSimulado.itensAlugados.add(novoItem);
-		System.out.println("Item cadastrado com sucesso!");
+		System.out.println("Item cadastrado com sucesso.");
 	}
 }
