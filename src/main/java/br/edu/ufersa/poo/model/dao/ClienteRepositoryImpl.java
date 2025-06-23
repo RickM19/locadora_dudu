@@ -32,7 +32,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     @Override
     public List<Cliente> findAll(){
         try (EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("FROM Usuario", Cliente.class).getResultList();
+            return em.createQuery("FROM Cliente", Cliente.class).getResultList();
         }catch (Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);
