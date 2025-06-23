@@ -37,7 +37,7 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     @Override
     public List<Disco> findAll(){
         try (EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("FROM Produto", Disco.class).getResultList();
+            return em.createQuery("FROM Disco", Disco.class).getResultList();
         }catch (Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);

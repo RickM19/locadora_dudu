@@ -26,7 +26,7 @@ public class LivroRepositoryImpl implements LivroRepository {
     @Override
     public List<Livro> findAll() {
         try(EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("FROM Produto", Livro.class).getResultList();
+            return em.createQuery("FROM Livro", Livro.class).getResultList();
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);
             throw new RuntimeException(e);
