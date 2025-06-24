@@ -26,7 +26,7 @@ public class ItemAlugadoServiceImpl implements ItemAlugadoService {
 
     @Override
     public void excluir(ItemAlugado item) {
-        if(item != null)
+        if(item != null && itemRepo.findById(item) != null)
             itemRepo.delete(item);
         else
             throw new IllegalArgumentException("Esse item não existe.");

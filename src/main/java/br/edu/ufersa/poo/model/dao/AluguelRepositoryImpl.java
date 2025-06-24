@@ -36,16 +36,19 @@ public class AluguelRepositoryImpl implements AluguelRepository {
 
     @Override
     public List<Aluguel> findByPeriod(LocalDate dataInicio, LocalDate dataFim) {
-        try (EntityManager em = emf.createEntityManager()){
-            return em.createQuery(
-                    "SELECT a FROM Aluguel a WHERE a.dataInicio BETWEEN :inicio AND :fim", Aluguel.class)
-                    .setParameter("inicio", dataInicio)
-                    .setParameter("fim", dataFim)
-                    .getResultList();
-        }catch (Throwable e){
-            System.err.println("Falha ao criar EntityManager " + e);
-            throw new RuntimeException(e);
-        }
+        if(!dataFim.isBefore(dataInicio)){
+            try (EntityManager em = emf.createEntityManager()) {
+                return em.createQuery(
+                        "SELECT a FROM Aluguel a WHERE a.dataInicio BETWEEN :inicio AND :fim", Aluguel.class)
+                        .setParameter("inicio", dataInicio)
+                        .setParameter("fim", dataFim)
+                        .getResultList();
+            } catch (Throwable e) {
+                System.err.println("Falha ao criar EntityManager " + e);
+                throw new RuntimeException(e);
+            }
+        } else
+            throw new IllegalArgumentException("A data de início deve ser antes da data de fim.");
     }
 
     @Override

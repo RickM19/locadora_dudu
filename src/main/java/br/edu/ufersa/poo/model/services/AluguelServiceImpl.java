@@ -23,7 +23,7 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public List<Aluguel> buscarPorPeriodo(LocalDate dataInicio, LocalDate dataFim) {
-        if(dataInicio != null && dataFim != null)
+        if(dataInicio != null && dataFim != null && !dataFim.isBefore(dataInicio))
             return aluguelRepo.findByPeriod(dataInicio, dataFim);
         return null;
     }
@@ -33,7 +33,7 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public void excluir(Aluguel aluguel) {
-        if(aluguel != null)
+        if(aluguel != null && aluguelRepo.findById(aluguel) != null)
             aluguelRepo.delete(aluguel);
         else
             throw new IllegalArgumentException("Esse aluguel não existe.");
@@ -41,9 +41,12 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public void finalizar(Aluguel aluguel) {
-        if(aluguel != null)
-            aluguel.setFinalizado(true);
-        else
+        if(aluguel != null && aluguelRepo.findById(aluguel) != null) {
+            if (!aluguel.getFinalizado()) {
+                aluguel.setFinalizado(true);
+                aluguelRepo.update(aluguel);
+            } else throw new IllegalStateException("Aluguel já está finalizado");
+        } else
             throw new IllegalArgumentException("Esse aluguel não existe.");
     }
 
