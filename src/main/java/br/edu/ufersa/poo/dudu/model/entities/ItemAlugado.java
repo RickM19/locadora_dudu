@@ -4,9 +4,13 @@ import br.edu.ufersa.poo.dudu.model.enums.TipoProduto;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="Itens_Alugados")
+@Table(name="ItemAlugado")
 public class ItemAlugado {
 	//Atributos
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
 	@ManyToOne
 	@JoinColumn(name = "id_aluguel", nullable = false)
 	private Aluguel aluguel;
@@ -26,6 +30,9 @@ public class ItemAlugado {
 	private double valorAluguel;
 	
 	//Getters
+	public long getId() {
+		return id;
+	}
 	public Aluguel getAluguel() {
 		return this.aluguel;
 	}
@@ -72,7 +79,7 @@ public class ItemAlugado {
 		setNomeItem(nomeItem);
 		setValorAluguel(valorAluguel);
 	}
-	
-	//Métodos
+
+    //Métodos
 
 }

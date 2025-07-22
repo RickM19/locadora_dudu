@@ -1,12 +1,11 @@
 package br.edu.ufersa.poo.dudu.model.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="Alugueis")
+@Table(name="Aluguel")
 public class Aluguel {
 	//Atributos
 	@Id
