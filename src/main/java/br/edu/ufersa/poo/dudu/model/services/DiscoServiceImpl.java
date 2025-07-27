@@ -13,6 +13,7 @@ import java.util.List;
 
 public class DiscoServiceImpl implements DiscoService{
    private final DiscoRepository discoRp = new DiscoRepositoryImpl();
+    private final Session sessionInstance = Session.getInstance();
     @Override
     public Disco buscarPorNomeBanda(String nomeBanda){
         if(nomeBanda !=null && !nomeBanda.isEmpty())
@@ -46,7 +47,7 @@ public class DiscoServiceImpl implements DiscoService{
 
     @Override
     public void cadastrar(Disco disco){
-        Usuario usuarioLogado = Session.getUsuarioLogado();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
@@ -59,7 +60,7 @@ public class DiscoServiceImpl implements DiscoService{
 
     @Override
     public void excluir(long id) {
-        Usuario usuarioLogado = Session.getUsuarioLogado();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
@@ -71,7 +72,7 @@ public class DiscoServiceImpl implements DiscoService{
     }
     @Override
     public void alterarEstoque(long id, int qtd) {
-        Usuario usuarioLogado = Session.getUsuarioLogado();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class LivroServiceImpl implements LivroService {
     private final LivroRepository livroRepo = new LivroRepositoryImpl();
+    private final Session sessionInstance = Session.getInstance();
 
     @Override
     public Livro buscarPorId(Livro l) {
@@ -50,7 +51,7 @@ public class LivroServiceImpl implements LivroService {
     }
     @Override
     public void cadastrar(Livro l) {
-        Usuario usuarioLogado = Session.getUsuarioLogado();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
@@ -62,7 +63,7 @@ public class LivroServiceImpl implements LivroService {
     }
     @Override
     public void excluir(Livro l) {
-        Usuario usuarioLogado = Session.getUsuarioLogado();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
@@ -74,7 +75,7 @@ public class LivroServiceImpl implements LivroService {
     }
     @Override
     public void alterarEstoque(Livro l) {
-        Usuario usuarioLogado = Session.getUsuarioLogado();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }

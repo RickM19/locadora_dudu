@@ -9,6 +9,7 @@ import java.util.List;
 
 public class UsuarioServiceImpl implements UserService {
     private final UsuarioRepository usuarioRepo = new UsuarioRepositoryImpl();
+    private final Session sessionInstance = Session.getInstance();
 
     @Override
     public void fazerLogin(Usuario u) {
@@ -16,11 +17,11 @@ public class UsuarioServiceImpl implements UserService {
         if(userEncontrado == null || !userEncontrado.getSenha().equals(u.getSenha())) {
             throw new IllegalArgumentException("Nome de usuário ou senha inválidos!");
         }
-        Session.setUsuarioLogado(userEncontrado);
+        sessionInstance.setUsuarioLogado(userEncontrado);
     }
 
     public void deslogar() {
-        Session.encerrarSessao();
+        sessionInstance.encerrarSessao();
     }
 
     @Override
