@@ -41,6 +41,13 @@ public abstract class Produto {
     public double getValorAluguel() { return valorAluguel; }
 
     // setters
+    public void setId(long id) {
+        if(id < 0) {
+            throw new IllegalArgumentException(("ID inválido!"));
+        }
+        this.id = id;
+    }
+
     public void setTitulo(String titulo) {
         if (titulo == null || titulo.isEmpty())
             throw new IllegalArgumentException("O título é obrigatório!");

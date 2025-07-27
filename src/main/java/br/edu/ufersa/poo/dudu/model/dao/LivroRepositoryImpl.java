@@ -14,9 +14,9 @@ public class LivroRepositoryImpl implements LivroRepository {
     private final EntityManagerFactory emf = JPAUtil.getEntityManagerFactory();
 
     @Override
-    public Livro findById(long id) {
+    public Livro findById(Livro l) {
         try(EntityManager em = emf.createEntityManager()) {
-            return em.find(Livro.class, id);
+            return em.find(Livro.class, l.getId());
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);
             throw new RuntimeException(e);
@@ -73,10 +73,10 @@ public class LivroRepositoryImpl implements LivroRepository {
     }
 
     @Override
-    public Livro findByTitle(String title) {
+    public Livro findByTitle(Livro l) {
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Livro> q = em.createQuery("SELECT l from Livro WHERE l.titulo = :e", Livro.class);
-            q.setParameter("e", title);
+            q.setParameter("e", l.getTitulo());
             return q.getResultStream().findFirst().orElse(null);
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);
@@ -85,10 +85,10 @@ public class LivroRepositoryImpl implements LivroRepository {
     }
 
     @Override
-    public Livro findByGenre(String genre) {
+    public Livro findByGenre(Livro l) {
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Livro> q = em.createQuery("SELECT l from Livro WHERE l.categoria = :e", Livro.class);
-            q.setParameter("e", genre);
+            q.setParameter("e", l.getCategoria());
             return q.getResultStream().findFirst().orElse(null);
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);
@@ -97,10 +97,10 @@ public class LivroRepositoryImpl implements LivroRepository {
     }
 
     @Override
-    public Livro findByYear(int year) {
+    public Livro findByYear(Livro l) {
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Livro> q = em.createQuery("SELECT l from Livro WHERE l.anoPublicacao = :e", Livro.class);
-            q.setParameter("e", year);
+            q.setParameter("e", l.getAnoPublicacao());
             return q.getResultStream().findFirst().orElse(null);
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);
@@ -109,10 +109,10 @@ public class LivroRepositoryImpl implements LivroRepository {
     }
 
     @Override
-    public Livro findByAuthor(String author) {
+    public Livro findByAuthor(Livro l) {
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Livro> q = em.createQuery("SELECT l from Livro WHERE l.autor = :e", Livro.class);
-            q.setParameter("e", author);
+            q.setParameter("e", l.getAutor());
             return q.getResultStream().findFirst().orElse(null);
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);

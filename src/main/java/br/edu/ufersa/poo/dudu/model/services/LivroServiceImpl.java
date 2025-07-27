@@ -13,38 +13,38 @@ public class LivroServiceImpl implements LivroService {
     private final LivroRepository livroRepo = new LivroRepositoryImpl();
 
     @Override
-    public Livro buscarPorId(long id) {
-        return livroRepo.findById(id);
+    public Livro buscarPorId(Livro l) {
+        return livroRepo.findById(l);
     }
     @Override
     public List<Livro> listarTodos() {
         return livroRepo.findAll();
     }
     @Override
-    public Livro buscarPorTitulo(String titulo) {
-        if(titulo != null && !titulo.isEmpty()) {
-            return livroRepo.findByTitle(titulo);
+    public Livro buscarPorTitulo(Livro l) {
+        if(l.getTitulo() != null && !l.getTitulo().isEmpty()) {
+            return livroRepo.findByTitle(l);
         }
         return null;
     }
     @Override
-    public Livro buscarPorAutor(String autor) {
-        if(autor != null && !autor.isEmpty()) {
-            return livroRepo.findByAuthor(autor);
+    public Livro buscarPorAutor(Livro l) {
+        if(l.getAutor() != null && !l.getAutor().isEmpty()) {
+            return livroRepo.findByAuthor(l);
         }
         return null;
     }
     @Override
-    public Livro buscarPorGenero(String genero) {
-        if(genero != null && !genero.isEmpty()) {
-            return livroRepo.findByGenre(genero);
+    public Livro buscarPorGenero(Livro l) {
+        if(l.getCategoria() != null && !l.getCategoria().isEmpty()) {
+            return livroRepo.findByGenre(l);
         }
         return null;
     }
     @Override
-    public Livro buscarPorAno(int ano) {
-        if(ano > 0) {
-            return livroRepo.findByYear(ano);
+    public Livro buscarPorAno(Livro l) {
+        if(l.getAnoPublicacao() > 0) {
+            return livroRepo.findByYear(l);
         }
         return null;
     }
@@ -54,40 +54,40 @@ public class LivroServiceImpl implements LivroService {
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
-        Livro livroEncontrado = livroRepo.findByTitle(l.getTitulo());
-        if(livroEncontrado != null && livroEncontrado.getTitulo().equals(l.getTitulo())){
+        Livro livroEncontrado = livroRepo.findByTitle(l);
+        if(livroEncontrado != null && livroEncontrado.getAutor().equals(l.getAutor())){
             throw new IllegalArgumentException("O livro informado ja está cadastrado!");
         }
         livroRepo.save(l);
     }
     @Override
-    public void excluir(long id) {
+    public void excluir(Livro l) {
         Usuario usuarioLogado = Session.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
-        Livro livroEncontrado = livroRepo.findById(id);
+        Livro livroEncontrado = livroRepo.findById(l);
         if(livroEncontrado == null) {
             throw new IllegalArgumentException("Livro inexistente!");
         }
         livroRepo.delete(livroEncontrado);
     }
     @Override
-    public void alterarEstoque(long id, int qtd) {
+    public void alterarEstoque(Livro l) {
         Usuario usuarioLogado = Session.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
-        Livro livroEncontrado = livroRepo.findById(id);
+        Livro livroEncontrado = livroRepo.findById(l);
         if(livroEncontrado == null) {
             throw new IllegalArgumentException("Livro inexistente!");
         }
-        livroEncontrado.setQtdExemplares(qtd);
-
+        livroEncontrado.setQtdExemplares(l.getExemplares());
+        livroRepo.update(livroEncontrado);
     }
     @Override
-    public void alugar(long id) {
-        Livro livroEncontrado = livroRepo.findById(id);
+    public void alugar(Livro l) {
+        Livro livroEncontrado = livroRepo.findById(l);
         if(livroEncontrado == null) {
             throw new IllegalArgumentException("Livro inexistente!");
         }
@@ -95,8 +95,8 @@ public class LivroServiceImpl implements LivroService {
         livroRepo.update(livroEncontrado);
     }
     @Override
-    public void devolver(long id) {
-        Livro livroEncontrado = livroRepo.findById(id);
+    public void devolver(Livro l) {
+        Livro livroEncontrado = livroRepo.findById(l);
         if(livroEncontrado == null) {
             throw new IllegalArgumentException("Livro inexistente!");
         }

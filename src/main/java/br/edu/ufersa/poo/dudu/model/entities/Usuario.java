@@ -41,6 +41,12 @@ public class Usuario {
 	}
 	
 	//Setters
+	public void setId(long id) {
+		if(id < 0) {
+			throw new IllegalArgumentException(("ID inválido!"));
+		}
+		this.id = id;
+	}
 
 	public void setNomeUsuario(String nomeUsuario) {
 		if(nomeUsuario == null || nomeUsuario.isEmpty())

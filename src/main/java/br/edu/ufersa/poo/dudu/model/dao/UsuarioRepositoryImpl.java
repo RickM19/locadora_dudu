@@ -13,9 +13,9 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     private final EntityManagerFactory emf = JPAUtil.getEntityManagerFactory();
 
     @Override
-    public Usuario findById(long id) {
+    public Usuario findById(Usuario u) {
         try(EntityManager em = emf.createEntityManager()) {
-            return em.find(Usuario.class, id);
+            return em.find(Usuario.class, u.getId());
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);
             throw new RuntimeException(e);
@@ -72,10 +72,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     }
 
     @Override
-    public Usuario findByUserName(String userName) {
+    public Usuario findByUserName(Usuario u) {
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Usuario> q = em.createQuery("SELECT u from Usuario WHERE u.nomeUsuario = :e", Usuario.class);
-            q.setParameter("e", userName);
+            q.setParameter("e", u.getNomeUsuario());
             return q.getResultStream().findFirst().orElse(null);
         } catch (Throwable e) {
             System.err.println("Falha ao criar o EntityManager " + e);

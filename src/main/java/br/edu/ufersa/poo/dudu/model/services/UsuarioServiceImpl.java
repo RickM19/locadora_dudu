@@ -11,9 +11,9 @@ public class UsuarioServiceImpl implements UserService {
     private final UsuarioRepository usuarioRepo = new UsuarioRepositoryImpl();
 
     @Override
-    public void fazerLogin(String nome, String senha) {
-        Usuario userEncontrado = usuarioRepo.findByUserName(nome);
-        if(userEncontrado == null || !userEncontrado.getSenha().equals(senha)) {
+    public void fazerLogin(Usuario u) {
+        Usuario userEncontrado = usuarioRepo.findByUserName(u);
+        if(userEncontrado == null || !userEncontrado.getSenha().equals(u.getSenha())) {
             throw new IllegalArgumentException("Nome de usuário ou senha inválidos!");
         }
         Session.setUsuarioLogado(userEncontrado);
@@ -24,8 +24,8 @@ public class UsuarioServiceImpl implements UserService {
     }
 
     @Override
-    public Usuario buscarPorId(long id) {
-        return usuarioRepo.findById(id);
+    public Usuario buscarPorId(Usuario u) {
+        return usuarioRepo.findById(u);
     }
 
     @Override
@@ -35,24 +35,24 @@ public class UsuarioServiceImpl implements UserService {
 
     @Override
     public void cadastrar(Usuario u) {
-        if(usuarioRepo.findByUserName(u.getNomeUsuario()) != null) {
+        if(usuarioRepo.findByUserName(u) != null) {
             throw new IllegalArgumentException("Usuário já cadastrado!");
         }
         usuarioRepo.save(u);
     }
 
     @Override
-    public void alterarSenha(long id, String novaSenha) {
-        Usuario usuarioEncontrado = usuarioRepo.findById(id);
+    public void alterarSenha(Usuario u) {
+        Usuario usuarioEncontrado = usuarioRepo.findById(u);
         if(usuarioEncontrado == null)
             throw new IllegalArgumentException("Usuário inexistente!");
-        usuarioEncontrado.setSenha(novaSenha);
+        usuarioEncontrado.setSenha(u.getSenha());
         usuarioRepo.update(usuarioEncontrado);
     }
 
     @Override
-    public void excluir(long id) {
-        Usuario usuarioEncontrado = usuarioRepo.findById(id);
+    public void excluir(Usuario u) {
+        Usuario usuarioEncontrado = usuarioRepo.findById(u);
         if(usuarioEncontrado == null)
             throw new IllegalArgumentException("Usuário inexistente!");
         usuarioRepo.delete(usuarioEncontrado);
