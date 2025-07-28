@@ -32,7 +32,7 @@ public class LoginController {
         try {
             service.fazerLogin(userLogante);
             JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
-            ProjetoDudu.painelControle();
+            ProjetoDudu.produtos();
 
         } catch (AuthenticationException e) {
             erro.setText(e.getMessage());
