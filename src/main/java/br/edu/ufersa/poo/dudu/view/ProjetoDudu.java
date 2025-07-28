@@ -13,41 +13,37 @@ public class ProjetoDudu extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        this.stage = stage;
+        ProjetoDudu.stage = stage;
         telaLogin();
     }
 
     private static void loadTela(String nomeArquivo){
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource
-                ("/br/edu/ufersa/poo/dudu" + nomeArquivo));
+                ("/br/edu/ufersa/poo/dudu/" + nomeArquivo));
         Scene scene;
         try {
-            scene = new Scene(fxmlLoader.load());
+            scene = new Scene(fxmlLoader.load(), 800, 600);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        stage.setTitle("Locadora Dudu");
         stage.setScene(scene);
         stage.show();
     }
 
     public static void telaLogin(){
-        stage.setTitle("Login");
         loadTela("login.fxml");
     }
     public static void alugueis(){
-        stage.setTitle("Alugueis");
         loadTela("alugueis.fxml");
     }
     public static void cadastro(){
-        stage.setTitle("Cadastro");
         loadTela("cadastro.fxml");
     }
     public static void painelControle(){
-        stage.setTitle("Locadora Dudu");
         loadTela("painel_controle.fxml");
     }
     public static void relatorios(){
-        stage.setTitle("Relatórios");
         loadTela("relatorios.fxml");
     }
 
