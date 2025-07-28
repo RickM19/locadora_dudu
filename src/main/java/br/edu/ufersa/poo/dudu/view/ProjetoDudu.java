@@ -1,6 +1,7 @@
 package br.edu.ufersa.poo.dudu.view;
 
 import br.edu.ufersa.poo.dudu.HelloApplication;
+import br.edu.ufersa.poo.dudu.util.DatabaseSeeder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ public class ProjetoDudu extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         ProjetoDudu.stage = stage;
+        DatabaseSeeder.seedUsuarioDudu();
         telaLogin();
     }
 
