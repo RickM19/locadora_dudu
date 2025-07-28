@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0">
@@ -54,6 +53,11 @@
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </Button>
+                  <Label fx:id="erro" layoutX="58.0" layoutY="117.0" prefHeight="28.0" prefWidth="184.0" visible="false">
+                     <font>
+                        <Font name="Book Antiqua" size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
