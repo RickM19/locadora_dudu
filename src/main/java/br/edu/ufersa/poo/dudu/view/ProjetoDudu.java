@@ -43,7 +43,7 @@ public class ProjetoDudu extends Application {
         loadTela("cadastro.fxml");
     }
     public static void painelControle(){
-        loadTela("painel_controle.fxml");
+        loadTela("produtos.fxml");
     }
     public static void relatorios(){
         loadTela("relatorios.fxml");
