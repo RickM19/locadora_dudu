@@ -19,7 +19,9 @@ public class Disco extends Produto {
 	public Disco(){}
 
     // getters e setters
-
+	public String getTipo() {
+		return "DISCO";
+	}
     public String getNomeBanda() {
 		return nomeBanda;
 	}

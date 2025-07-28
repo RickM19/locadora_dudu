@@ -1,5 +1,6 @@
 package br.edu.ufersa.poo.dudu.model.entities;
 
+import br.edu.ufersa.poo.dudu.model.enums.TipoProduto;
 import jakarta.persistence.*;
 
 @Entity
@@ -27,6 +28,7 @@ public abstract class Produto {
     private double valorAluguel;
 
     // getters
+    abstract String getTipo();
     public long getId() {
         return id;
     }

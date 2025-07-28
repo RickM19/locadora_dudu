@@ -17,6 +17,9 @@ public class Livro extends Produto {
 	private int qtdPaginas;
 
 	//Getters
+	public String getTipo() {
+		return "LIVRO";
+	}
 	public String getAutor() {
 		return autor;
 	}
