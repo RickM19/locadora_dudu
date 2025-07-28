@@ -74,7 +74,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
     @Override
     public Usuario findByUserName(Usuario u) {
         try(EntityManager em = emf.createEntityManager()) {
-            TypedQuery<Usuario> q = em.createQuery("SELECT u from Usuario WHERE u.nomeUsuario = :e", Usuario.class);
+            TypedQuery<Usuario> q = em.createQuery("SELECT u from Usuario u WHERE u.nomeUsuario = :e", Usuario.class);
             q.setParameter("e", u.getNomeUsuario());
             return q.getResultStream().findFirst().orElse(null);
         } catch (Throwable e) {

@@ -15,7 +15,7 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     @Override
     public Disco findByBandName(Disco d){
         try(EntityManager em = emf.createEntityManager()) {
-            TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco WHERE disco.nomeBanda = :e", Disco.class);
+            TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco disco WHERE disco.nomeBanda = :e", Disco.class);
             tq.setParameter("e", d.getNomeBanda());
             return tq.getResultStream().findFirst().orElse(null);
         }catch(Throwable e){
@@ -47,7 +47,7 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     @Override
     public Disco findByTitle(Disco d){
         try(EntityManager em = emf.createEntityManager()) {
-            TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco WHERE disco.titulo = :e", Disco.class);
+            TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco disco WHERE disco.titulo = :e", Disco.class);
             tq.setParameter("e", d.getTitulo());
             return tq.getResultStream().findFirst().orElse(null);
         }catch(Throwable e){
@@ -59,7 +59,7 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     @Override
     public Disco findByGenre(Disco d){
         try(EntityManager em = emf.createEntityManager()) {
-            TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco WHERE disco.categoria = :e", Disco.class);
+            TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco disco WHERE disco.categoria = :e", Disco.class);
             tq.setParameter("e", d.getCategoria());
             return tq.getResultStream().findFirst().orElse(null);
         }catch(Throwable e){

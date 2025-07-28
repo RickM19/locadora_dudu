@@ -1,5 +1,6 @@
 package br.edu.ufersa.poo.dudu.model.services;
 
+import br.edu.ufersa.poo.dudu.exceptions.AuthenticationException;
 import br.edu.ufersa.poo.dudu.model.dao.UsuarioRepository;
 import br.edu.ufersa.poo.dudu.model.dao.UsuarioRepositoryImpl;
 import br.edu.ufersa.poo.dudu.model.entities.Usuario;
@@ -12,10 +13,10 @@ public class UsuarioServiceImpl implements UserService {
     private final Session sessionInstance = Session.getInstance();
 
     @Override
-    public void fazerLogin(Usuario u) {
+    public void fazerLogin(Usuario u) throws AuthenticationException {
         Usuario userEncontrado = usuarioRepo.findByUserName(u);
         if(userEncontrado == null || !userEncontrado.getSenha().equals(u.getSenha())) {
-            throw new IllegalArgumentException("Nome de usuário ou senha inválidos!");
+            throw new AuthenticationException();
         }
         sessionInstance.setUsuarioLogado(userEncontrado);
     }
