@@ -15,15 +15,15 @@ public class DiscoServiceImpl implements DiscoService{
    private final DiscoRepository discoRp = new DiscoRepositoryImpl();
     private final Session sessionInstance = Session.getInstance();
     @Override
-    public Disco buscarPorNomeBanda(String nomeBanda){
-        if(nomeBanda !=null && !nomeBanda.isEmpty())
-            return discoRp.findByBandName(nomeBanda);
+    public Disco buscarPorNomeBanda(Disco d){
+        if(d.getNomeBanda() !=null && !d.getNomeBanda().isEmpty())
+            return discoRp.findByBandName(d);
         return null;
     }
 
     @Override
-    public Disco buscarPorId(long id){
-        return discoRp.findById(id);
+    public Disco buscarPorId(Disco d){
+        return discoRp.findById(d);
     }
 
     @Override
@@ -32,16 +32,16 @@ public class DiscoServiceImpl implements DiscoService{
     }
 
     @Override
-    public Disco buscarPorTitulo(String titulo){
-        if(titulo !=null && !titulo.isEmpty())
-            return discoRp.findByTitle(titulo);
+    public Disco buscarPorTitulo(Disco d){
+        if(d.getTitulo() !=null && !d.getTitulo().isEmpty())
+            return discoRp.findByTitle(d);
         return null;
     }
 
     @Override
-    public Disco buscarPorGenero(String genero){
-        if(genero !=null && !genero.isEmpty())
-            return discoRp.findByGenre(genero);
+    public Disco buscarPorGenero(Disco d){
+        if(d.getCategoria() !=null && !d.getCategoria().isEmpty())
+            return discoRp.findByGenre(d);
         return null;
     }
 
@@ -51,7 +51,7 @@ public class DiscoServiceImpl implements DiscoService{
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
-        Disco discoEncontrado = discoRp.findByTitle(disco.getTitulo());
+        Disco discoEncontrado = discoRp.findByTitle(disco);
         if(discoEncontrado != null && discoEncontrado.getTitulo().equals(disco.getTitulo())){
             throw new IllegalArgumentException("Disco já cadastrado!");
         }
@@ -59,33 +59,34 @@ public class DiscoServiceImpl implements DiscoService{
     }
 
     @Override
-    public void excluir(long id) {
+    public void excluir(Disco d) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
-        Disco discoEncontrado = discoRp.findById(id);
+        Disco discoEncontrado = discoRp.findById(d);
         if(discoEncontrado == null) {
             throw new IllegalArgumentException("Disco inexistente!");
         }
         discoRp.delete(discoEncontrado);
     }
     @Override
-    public void alterarEstoque(long id, int qtd) {
+    public void alterarEstoque(Disco d) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
         if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
-        Disco discoEncontrado = discoRp.findById(id);
+        Disco discoEncontrado = discoRp.findById(d);
         if(discoEncontrado == null) {
             throw new IllegalArgumentException("Disco inexistente!");
         }
-        discoEncontrado.setQtdExemplares(qtd);
+        discoEncontrado.setQtdExemplares(d.getExemplares());
+        discoRp.update(discoEncontrado);
 
     }
     @Override
-    public void alugar(long id) {
-        Disco discoEncontrado = discoRp.findById(id);
+    public void alugar(Disco d) {
+        Disco discoEncontrado = discoRp.findById(d);
         if(discoEncontrado == null) {
             throw new IllegalArgumentException("Disco inexistente!");
         }
@@ -93,8 +94,8 @@ public class DiscoServiceImpl implements DiscoService{
         discoRp.update(discoEncontrado);
     }
     @Override
-    public void devolver(long id) {
-        Disco discoEncontrado = discoRp.findById(id);
+    public void devolver(Disco d) {
+        Disco discoEncontrado = discoRp.findById(d);
         if(discoEncontrado == null) {
             throw new IllegalArgumentException("Disco inexistente!");
         }

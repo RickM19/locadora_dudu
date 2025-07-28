@@ -10,9 +10,9 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     private final EntityManagerFactory emf = JPAUtil.getEntityManagerFactory();
 
     @Override
-    public Cliente findByCpf(String cpf){
+    public Cliente findByCpf(Cliente c){
         try (EntityManager em = emf.createEntityManager()) {
-            return em.find(Cliente.class, cpf);
+            return em.find(Cliente.class, c.getCpf());
         }catch (Throwable e) {
            System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);
@@ -20,9 +20,9 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     @Override
-    public Cliente findByName(String nome){
+    public Cliente findByName(Cliente c){
         try (EntityManager em = emf.createEntityManager()) {
-            return em.find(Cliente.class, nome);
+            return em.find(Cliente.class, c.getNome());
         }catch (Throwable e) {
             System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);

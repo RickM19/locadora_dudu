@@ -13,10 +13,10 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     private final EntityManagerFactory emf = JPAUtil.getEntityManagerFactory();
 
     @Override
-    public Disco findByBandName(String bandName){
+    public Disco findByBandName(Disco d){
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco WHERE disco.nomeBanda = :e", Disco.class);
-            tq.setParameter("e", bandName);
+            tq.setParameter("e", d.getNomeBanda());
             return tq.getResultStream().findFirst().orElse(null);
         }catch(Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
@@ -25,9 +25,9 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     }
 
     @Override
-    public Disco findById(long id){
+    public Disco findById(Disco d){
         try(EntityManager em = emf.createEntityManager()){
-            return em.find(Disco.class, id);
+            return em.find(Disco.class, d.getId());
         }catch (Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);
@@ -45,10 +45,10 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     }
 
     @Override
-    public Disco findByTitle(String title){
+    public Disco findByTitle(Disco d){
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco WHERE disco.titulo = :e", Disco.class);
-            tq.setParameter("e", title);
+            tq.setParameter("e", d.getTitulo());
             return tq.getResultStream().findFirst().orElse(null);
         }catch(Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
@@ -57,10 +57,10 @@ public class DiscoRepositoryImpl implements DiscoRepository{
     }
 
     @Override
-    public Disco findByGenre(String genre){
+    public Disco findByGenre(Disco d){
         try(EntityManager em = emf.createEntityManager()) {
             TypedQuery<Disco> tq = em.createQuery("SELECT disco from Disco WHERE disco.categoria = :e", Disco.class);
-            tq.setParameter("e", genre);
+            tq.setParameter("e", d.getCategoria());
             return tq.getResultStream().findFirst().orElse(null);
         }catch(Throwable e){
             System.err.println("Falha ao criar EntityManager " + e);
