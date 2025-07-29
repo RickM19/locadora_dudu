@@ -4,6 +4,7 @@ import br.edu.ufersa.poo.dudu.model.entities.*;
 import br.edu.ufersa.poo.dudu.model.factory.ProdutoFactory;
 import br.edu.ufersa.poo.dudu.model.services.*;
 import br.edu.ufersa.poo.dudu.view.ProjetoDudu;
+import static br.edu.ufersa.poo.dudu.util.StringUtils.normalizar;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
@@ -91,10 +92,22 @@ public class ProdutosController {
         if (filtro.isEmpty()) {
             tabelaProdutos.setItems(produtosOL);
         } else {
-            List<Produto> filtrados = produtosOL.stream().filter(p ->
-                    (p.getTitulo() != null && p.getTitulo().toLowerCase().contains(filtro)) ||
-                            (p.getCategoria() != null && p.getCategoria().toLowerCase().contains(filtro))
-            ).collect(Collectors.toList());
+            String filtroNormalizado = normalizar(filtro);
+
+            List<Produto> filtrados = produtosOL.stream().filter(p -> {
+                boolean tituloMatch = normalizar(p.getTitulo()).contains(filtroNormalizado);
+                boolean categoriaMatch = normalizar(p.getCategoria()).contains(filtroNormalizado);
+                boolean autorBandaMatch;
+
+                if (p instanceof Livro livro) {
+                    autorBandaMatch = normalizar(livro.getAutor()).contains(filtroNormalizado);
+                } else if (p instanceof Disco disco) {
+                    autorBandaMatch = normalizar(disco.getNomeBanda()).contains(filtroNormalizado);
+                } else {
+                    autorBandaMatch = false;
+                }
+                return tituloMatch || categoriaMatch || autorBandaMatch;
+            }).toList();
             tabelaProdutos.setItems(FXCollections.observableArrayList(filtrados));
         }
         limparCampos();
