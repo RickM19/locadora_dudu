@@ -2,6 +2,8 @@ package br.edu.ufersa.poo.dudu.controller;
 
 import br.edu.ufersa.poo.dudu.model.entities.Cliente;
 import br.edu.ufersa.poo.dudu.model.services.ClienteServiceImpl;
+import br.edu.ufersa.poo.dudu.model.services.UserService;
+import br.edu.ufersa.poo.dudu.model.services.UsuarioServiceImpl;
 import br.edu.ufersa.poo.dudu.view.ProjetoDudu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,9 +45,11 @@ public class ClientesController {
 
     private ClienteServiceImpl clienteService;
     private ObservableList<Cliente> clienteOL;
+    private UserService userService;
 
     @FXML
     public void initialize(){
+        userService = new UsuarioServiceImpl();
         clienteService = new ClienteServiceImpl();
         clienteOL = FXCollections.observableArrayList();
 
@@ -176,7 +180,10 @@ alert.setContentText(mensagem);
 alert.showAndWait();
     }
 
-    public void sairButton(){ProjetoDudu.telaLogin();}
+    public void sairButton(){
+        userService.deslogar();
+        ProjetoDudu.telaLogin();
+    }
     public void relatoriosButton(){ProjetoDudu.relatorios();}
     public void alugueisButton(){ProjetoDudu.alugueis();}
     public void produtosButton(){ProjetoDudu.produtos();}
