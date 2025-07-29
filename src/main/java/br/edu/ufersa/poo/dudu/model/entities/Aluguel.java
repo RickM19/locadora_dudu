@@ -15,6 +15,10 @@ public class Aluguel {
 	@JoinColumn(name = "id_cliente", nullable = false)
 	private Cliente cliente;
 
+	@ManyToOne
+	@JoinColumn(name = "id_produto", nullable = false)
+	private Produto itemAlugado;
+
 	@Column(nullable = false)
 	private LocalDate dataInicio;
 
@@ -27,9 +31,6 @@ public class Aluguel {
 	@Column(nullable = false)
 	private boolean finalizado;
 
-	@OneToOne(mappedBy = "aluguel", cascade = CascadeType.ALL, orphanRemoval = true)
-	private ItemAlugado itemAlugado;
-
 	//Getters
 	public long getIdAluguel() {
 		return this.idAluguel;
@@ -37,6 +38,7 @@ public class Aluguel {
 	public Cliente getCliente() {
 		return this.cliente;
 	}
+	public Produto getItemAlugado() { return this.itemAlugado; }
 	public LocalDate getDataInicio() {
 		return this.dataInicio;
 	}
@@ -49,14 +51,15 @@ public class Aluguel {
 	public boolean getFinalizado() {
 		return this.finalizado;
 	}
-	public ItemAlugado getItemAlugado() {
-		return itemAlugado;
-	}
 
 	//Setters
 	public void setCliente(Cliente cliente) {
 		if (cliente != null) this.cliente = cliente;
-		else throw new IllegalArgumentException("O id do cliente está vazio.");
+		else throw new IllegalArgumentException("O Cliente está vazio.");
+	}
+	public void setItemAlugado(Produto itemAlugado) {
+		if(itemAlugado != null) this.itemAlugado = itemAlugado;
+		else throw new IllegalArgumentException("O Produto está vazio.");
 	}
 	public void setDataInicio(LocalDate dataInicio) {
 		if (dataInicio != null) this.dataInicio = dataInicio;
@@ -73,27 +76,16 @@ public class Aluguel {
 	public void setFinalizado(boolean finalizado) {
 		this.finalizado = finalizado;
 	}
-	public void setItemAlugado(ItemAlugado itemAlugado) {
-		if (itemAlugado != null) {
-			this.itemAlugado = itemAlugado;
-			itemAlugado.setAluguel(this);
-		}
-		else throw new IllegalArgumentException("O item alugado está vazios");
-	}
 
 	//Construtores
 	public Aluguel(){}
-	public Aluguel(Cliente cliente, LocalDate dataInicio, LocalDate dataFim, double valorTotal, boolean finalizado,
-				   ItemAlugado itemAlugado) {
+	public Aluguel(Cliente cliente, Produto itemAlugado, LocalDate dataInicio, LocalDate dataFim, double valorTotal,
+				   boolean finalizado) {
 		setCliente(cliente);
+		setItemAlugado(itemAlugado);
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
 		setValorTotal(valorTotal);
 		setFinalizado(finalizado);
-		setItemAlugado(itemAlugado);
 	}
-	
-	//Métodos
-
-	
 }
