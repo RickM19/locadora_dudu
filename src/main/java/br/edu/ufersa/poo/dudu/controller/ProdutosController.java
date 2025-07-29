@@ -1,7 +1,7 @@
 package br.edu.ufersa.poo.dudu.controller;
 
 import br.edu.ufersa.poo.dudu.model.entities.*;
-import br.edu.ufersa.poo.dudu.model.factory.ProdutoFactory;
+import br.edu.ufersa.poo.dudu.model.factory.ConcreteProdutoFactory;
 import br.edu.ufersa.poo.dudu.model.services.*;
 import br.edu.ufersa.poo.dudu.view.ProjetoDudu;
 import static br.edu.ufersa.poo.dudu.util.StringUtils.normalizar;
@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProdutosController {
 
@@ -28,14 +27,14 @@ public class ProdutosController {
     private DiscoService discoService;
     private ObservableList<Produto> produtosOL;
     private UserService userService;
-    private ProdutoFactory factory;
+    private ConcreteProdutoFactory factory;
 
     @FXML
     public void initialize() {
         userService = new UsuarioServiceImpl();
         livroService = new LivroServiceImpl();
         discoService = new DiscoServiceImpl();
-        factory = new ProdutoFactory();
+        factory = new ConcreteProdutoFactory();
         produtosOL = FXCollections.observableArrayList();
 
         tipoProduto.setItems(FXCollections.observableArrayList("LIVRO", "DISCO"));
