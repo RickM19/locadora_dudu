@@ -2,7 +2,6 @@ package br.edu.ufersa.poo.dudu.model.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name="Aluguel")
@@ -28,8 +27,8 @@ public class Aluguel {
 	@Column(nullable = false)
 	private boolean finalizado;
 
-	@OneToMany(mappedBy = "aluguel", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ItemAlugado> itensAlugados;
+	@OneToOne(mappedBy = "aluguel", cascade = CascadeType.ALL, orphanRemoval = true)
+	private ItemAlugado itemAlugado;
 
 	//Getters
 	public long getIdAluguel() {
@@ -50,8 +49,8 @@ public class Aluguel {
 	public boolean getFinalizado() {
 		return this.finalizado;
 	}
-	public List<ItemAlugado> getItensAlugados() {
-		return itensAlugados;
+	public ItemAlugado getItemAlugado() {
+		return itemAlugado;
 	}
 
 	//Setters
@@ -74,21 +73,24 @@ public class Aluguel {
 	public void setFinalizado(boolean finalizado) {
 		this.finalizado = finalizado;
 	}
-	public void setItensAlugados(List<ItemAlugado> itensAlugados) {
-		if (itensAlugados != null && !itensAlugados.isEmpty()) this.itensAlugados = itensAlugados;
-		else throw new IllegalArgumentException("Os itens alugados estão vazios");
+	public void setItemAlugado(ItemAlugado itemAlugado) {
+		if (itemAlugado != null) {
+			this.itemAlugado = itemAlugado;
+			itemAlugado.setAluguel(this);
+		}
+		else throw new IllegalArgumentException("O item alugado está vazios");
 	}
 
 	//Construtores
 	public Aluguel(){}
 	public Aluguel(Cliente cliente, LocalDate dataInicio, LocalDate dataFim, double valorTotal, boolean finalizado,
-				   List<ItemAlugado> itensAlugados) {
+				   ItemAlugado itemAlugado) {
 		setCliente(cliente);
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
 		setValorTotal(valorTotal);
 		setFinalizado(finalizado);
-		setItensAlugados(itensAlugados);
+		setItemAlugado(itemAlugado);
 	}
 	
 	//Métodos

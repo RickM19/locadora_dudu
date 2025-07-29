@@ -12,5 +12,6 @@ public interface AluguelService extends GenericService<Aluguel> {
     List<Aluguel> buscarPorPeriodo(LocalDate dataInicio, LocalDate dataFim);
     List<Aluguel> buscarAtivos();
     void excluir(Aluguel aluguel);
+    void atualizar(Aluguel aluguel);
     void finalizar(Aluguel aluguel);
 }

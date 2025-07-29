@@ -40,6 +40,14 @@ public class AluguelServiceImpl implements AluguelService {
     }
 
     @Override
+    public void atualizar(Aluguel aluguel) {
+        Aluguel aluguelEncontrado = aluguelRepo.findById(aluguel);
+        if(aluguelEncontrado == null)
+            throw new IllegalArgumentException("Aluguel inexistente!");
+        aluguelRepo.update(aluguelEncontrado);
+    }
+
+    @Override
     public void finalizar(Aluguel aluguel) {
         if(aluguel != null && aluguelRepo.findById(aluguel) != null) {
             if (!aluguel.getFinalizado()) {
