@@ -3,6 +3,8 @@ package br.edu.ufersa.poo.dudu.controller;
 import br.edu.ufersa.poo.dudu.model.entities.*;
 import br.edu.ufersa.poo.dudu.model.factory.ConcreteProdutoFactory;
 import br.edu.ufersa.poo.dudu.model.services.*;
+import br.edu.ufersa.poo.dudu.model.strategy.DiscoStrategy;
+import br.edu.ufersa.poo.dudu.model.strategy.LivroStrategy;
 import br.edu.ufersa.poo.dudu.view.ProjetoDudu;
 import static br.edu.ufersa.poo.dudu.util.StringUtils.normalizar;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -222,31 +224,28 @@ public class ProdutosController {
         String autorTxt = autorBanda.getText().trim();
         String categoriaTxt = categoria.getText().trim();
         int unidadesNum = Integer.parseInt(unidades.getText().trim());
-        int paginasNum = Integer.parseInt(paginas.getText().trim());
-        int anoNum = Integer.parseInt(anoPublicacao.getText().trim());
+        int paginasNum;
+        int anoNum;
+        if (tipo.equalsIgnoreCase("LIVRO")) {
+            paginasNum = Integer.parseInt(paginas.getText().trim());
+            anoNum = Integer.parseInt(anoPublicacao.getText().trim());
+        } else {
+            paginasNum = 0;
+            anoNum = 0;
+        }
+
         double valorNum = Double.parseDouble(valor.getText().trim());
 
-        if (tipo.equals("LIVRO")) {
-            Livro livro = (Livro) factory.criarProduto(tipo);
-            livro.setTitulo(tituloTxt);
-            livro.setAutor(autorTxt);
-            livro.setCategoria(categoriaTxt);
-            livro.setQtdExemplares(unidadesNum);
-            livro.setQtdPaginas(paginasNum);
-            livro.setAnoPublicacao(anoNum);
-            livro.setValorAluguel(valorNum);
-            livro.setQtdDisponivelAluguel(unidadesNum);
-            return livro;
-        } else {
-            Disco disco = (Disco) factory.criarProduto(tipo);
-            disco.setTitulo(tituloTxt);
-            disco.setCategoria(categoriaTxt);
-            disco.setNomeBanda(autorTxt);
-            disco.setQtdExemplares(unidadesNum);
-            disco.setQtdDisponivelAluguel(unidadesNum);
-            disco.setValorAluguel(valorNum);
-            return disco;
-        }
+        return factory.criarProduto(
+                tipo,
+                tituloTxt,
+                autorTxt,
+                categoriaTxt,
+                unidadesNum,
+                paginasNum,
+                anoNum,
+                valorNum
+        );
     }
 
     private void showAlert(Alert.AlertType tipo, String titulo, String msg) {
