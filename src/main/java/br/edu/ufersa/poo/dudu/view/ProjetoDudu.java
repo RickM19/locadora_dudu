@@ -1,6 +1,5 @@
 package br.edu.ufersa.poo.dudu.view;
 
-import br.edu.ufersa.poo.dudu.HelloApplication;
 import br.edu.ufersa.poo.dudu.model.entities.Usuario;
 import br.edu.ufersa.poo.dudu.model.enums.TipoUsuario;
 import br.edu.ufersa.poo.dudu.util.DatabaseSeeder;
@@ -26,7 +25,7 @@ public class ProjetoDudu extends Application {
     }
 
     private static void loadTela(String nomeArquivo){
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjetoDudu.class.getResource
                 ("/br/edu/ufersa/poo/dudu/" + nomeArquivo));
         Scene scene;
         try {

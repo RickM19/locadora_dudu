@@ -1,0 +1,10 @@
+Instruções para Executar o projeto:
+Clone o projeto https://github.com/RickM19/locadora_dudu
+Inicie o banco de dados MySQL e crie uma base de dados chamada poo
+Garanta que as depedências foram instaladas com o Maven (preferencia usar o intelliJ)
+Configure a conexão com o seu usuario e senha no arquivo persistence.xml em src/resources/META-INF/
+Execute a classe ProjetoDudu presente em src/main/java/br/edu/ufersa/poo/dudu/view
+
+Ao rodar pela primeira vez o usuário gerado pelo seed é o:
+Login: Dudu
+senha: dudu4321
