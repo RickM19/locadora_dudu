@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ItemAlugadoService extends GenericService<ItemAlugado> {
     ItemAlugado buscarPorId(ItemAlugado item);
+    ItemAlugado buscarPorNome(ItemAlugado item);
     List<ItemAlugado> buscarPorAluguel(Aluguel aluguel);
     void excluir(ItemAlugado item);
 }

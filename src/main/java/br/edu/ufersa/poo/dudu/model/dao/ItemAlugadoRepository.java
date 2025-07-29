@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ItemAlugadoRepository extends GenericRepository<ItemAlugado> {
     ItemAlugado findById(ItemAlugado item);
+    ItemAlugado findByName(ItemAlugado item);
     List<ItemAlugado> findByRental(Aluguel aluguel);
 }

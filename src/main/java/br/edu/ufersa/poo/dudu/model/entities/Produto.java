@@ -29,7 +29,7 @@ public abstract class Produto {
 
     // getters
     abstract String getAutorBanda();
-    abstract String getTipo();
+    public abstract String getTipo();
     public long getId() {
         return id;
     }

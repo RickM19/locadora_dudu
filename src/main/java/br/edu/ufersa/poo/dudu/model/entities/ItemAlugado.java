@@ -11,7 +11,7 @@ public class ItemAlugado {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "id_aluguel", nullable = false)
 	private Aluguel aluguel;
 
@@ -25,9 +25,6 @@ public class ItemAlugado {
 
 	@Column(nullable = false, length = 50)
 	private String nomeItem;
-
-	@Column(nullable = false)
-	private double valorAluguel;
 	
 	//Getters
 	public long getId() {
@@ -44,9 +41,6 @@ public class ItemAlugado {
 	}
 	public String getNomeItem() {
 		return this.nomeItem;
-	}
-	public double getValorAluguel() {
-		return this.valorAluguel;
 	}
 	
 	//Setters
@@ -65,21 +59,13 @@ public class ItemAlugado {
 		if(nomeItem != null && !nomeItem.isEmpty()) this.nomeItem = nomeItem;
 		else throw new IllegalArgumentException("O nome do item está nulo ou vazio");
 	}
-	public void setValorAluguel(double valorAluguel) {
-		if(valorAluguel >= 0) this.valorAluguel = valorAluguel;
-		else throw new IllegalArgumentException("O valor do aluguel deve ser positivo");
-	}
 	
 	//Construtores
 	public ItemAlugado(){}
-	public ItemAlugado(Aluguel aluguel, Produto produto, TipoProduto tipo, String nomeItem, double valorAluguel) {
+	public ItemAlugado(Aluguel aluguel, Produto produto, TipoProduto tipo, String nomeItem) {
 		setAluguel(aluguel);
 		setProduto(produto);
 		setTipo(tipo);
 		setNomeItem(nomeItem);
-		setValorAluguel(valorAluguel);
 	}
-
-    //Métodos
-
 }

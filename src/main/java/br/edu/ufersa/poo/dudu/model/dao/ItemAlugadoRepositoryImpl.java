@@ -21,6 +21,16 @@ public class ItemAlugadoRepositoryImpl implements ItemAlugadoRepository {
     }
 
     @Override
+    public ItemAlugado findByName(ItemAlugado item) {
+        try (EntityManager em = emf.createEntityManager()){
+            return em.find(ItemAlugado.class, item.getNomeItem());
+        }catch (Throwable e){
+            System.err.println("Falha ao criar EntityManager " + e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<ItemAlugado> findByRental(Aluguel aluguel) {
         try (EntityManager em = emf.createEntityManager()) {
             return em.createQuery(

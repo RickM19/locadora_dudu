@@ -18,6 +18,13 @@ public class ItemAlugadoServiceImpl implements ItemAlugadoService {
     }
 
     @Override
+    public ItemAlugado buscarPorNome(ItemAlugado item) {
+        if (item != null)
+            return itemRepo.findByName(item);
+        return null;
+    }
+
+    @Override
     public List<ItemAlugado> buscarPorAluguel(Aluguel aluguel) {
         if (aluguel != null)
             return itemRepo.findByRental(aluguel);
