@@ -3,8 +3,6 @@ package br.edu.ufersa.poo.dudu.controller;
 import br.edu.ufersa.poo.dudu.model.entities.*;
 import br.edu.ufersa.poo.dudu.model.factory.ConcreteProdutoFactory;
 import br.edu.ufersa.poo.dudu.model.services.*;
-import br.edu.ufersa.poo.dudu.model.strategy.DiscoStrategy;
-import br.edu.ufersa.poo.dudu.model.strategy.LivroStrategy;
 import br.edu.ufersa.poo.dudu.view.ProjetoDudu;
 import static br.edu.ufersa.poo.dudu.util.StringUtils.normalizar;
 import javafx.beans.property.SimpleIntegerProperty;
