@@ -28,6 +28,7 @@ public abstract class Produto {
     private double valorAluguel;
 
     // getters
+    abstract String getAutorBanda();
     abstract String getTipo();
     public long getId() {
         return id;

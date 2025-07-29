@@ -13,6 +13,7 @@ public class Session {
     private Session() {}
     public void setUsuarioLogado(Usuario usuario) {
         usuarioLogado = usuario;
+        timestampUltimoLogin = Instant.now().toEpochMilli();
     }
     public void encerrarSessao() {
         usuarioLogado = null;

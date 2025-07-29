@@ -52,7 +52,7 @@ public class LivroServiceImpl implements LivroService {
     @Override
     public void cadastrar(Livro l) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
         Livro livroEncontrado = livroRepo.findByTitle(l);
@@ -64,7 +64,8 @@ public class LivroServiceImpl implements LivroService {
     @Override
     public void excluir(Livro l) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+        System.out.println(usuarioLogado);
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
         Livro livroEncontrado = livroRepo.findById(l);
@@ -76,14 +77,20 @@ public class LivroServiceImpl implements LivroService {
     @Override
     public void alterarEstoque(Livro l) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
         Livro livroEncontrado = livroRepo.findById(l);
         if(livroEncontrado == null) {
             throw new IllegalArgumentException("Livro inexistente!");
         }
+        int antigaQtdExemplares = livroEncontrado.getExemplares();
+        int diferenca = l.getExemplares() - antigaQtdExemplares;
+        int novosDisponiveis = livroEncontrado.getQtdDisponivelAluguel() + diferenca;
+        int novaQtdDisponivelAluguel = Math.max(novosDisponiveis, 0);
+
         livroEncontrado.setQtdExemplares(l.getExemplares());
+        livroEncontrado.setQtdDisponivelAluguel(novaQtdDisponivelAluguel);
         livroRepo.update(livroEncontrado);
     }
     @Override

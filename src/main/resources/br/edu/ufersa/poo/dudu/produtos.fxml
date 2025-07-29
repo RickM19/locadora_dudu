@@ -53,71 +53,71 @@
                   </Button>
                </children>
             </AnchorPane>
-            <TextField layoutX="221.0" layoutY="14.0" prefHeight="28.0" prefWidth="563.0" promptText="Buscar">
+            <TextField id="buscar" fx:id="buscar" layoutX="221.0" layoutY="14.0" prefHeight="28.0" prefWidth="563.0" promptText="Buscar">
                <font>
                   <Font name="Book Antiqua" size="14.0" />
                </font>
             </TextField>
-            <TableView layoutX="221.0" layoutY="53.0" prefHeight="200.0" prefWidth="563.0">
+            <TableView id="tabelaProdutos" fx:id="tabelaProdutos" layoutX="221.0" layoutY="53.0" prefHeight="200.0" prefWidth="563.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Título" />
-                <TableColumn prefWidth="84.0" text="Autor/Banda" />
-                  <TableColumn prefWidth="66.0" text="Categoria" />
-                  <TableColumn prefWidth="75.0" text="Unidades" />
-                  <TableColumn prefWidth="75.0" text="Páginas" />
-                  <TableColumn prefWidth="110.0" text="Ano de publicação" />
-                  <TableColumn prefWidth="76.0" text="Valor" />
+                <TableColumn id="tituloCol" fx:id="tituloCol" prefWidth="75.0" text="Título" />
+                <TableColumn id="autorCol" fx:id="autorCol" prefWidth="84.0" text="Autor/Banda" />
+                  <TableColumn id="categoriaCol" fx:id="categoriaCol" prefWidth="66.0" text="Categoria" />
+                  <TableColumn id="unidadesCol" fx:id="unidadesCol" prefWidth="75.0" text="Unidades" />
+                  <TableColumn id="paginasCol" fx:id="paginasCol" prefWidth="75.0" text="Páginas" />
+                  <TableColumn id="anoCol" fx:id="anoCol" prefWidth="110.0" text="Ano de publicação" />
+                  <TableColumn id="valorCol" fx:id="valorCol" prefWidth="76.0" text="Valor" />
               </columns>
             </TableView>
             <AnchorPane layoutX="221.0" layoutY="253.0" prefHeight="327.0" prefWidth="563.0">
                <children>
-                  <ComboBox layoutY="14.0" prefWidth="150.0" />
-                  <TextField layoutX="1.0" layoutY="52.0" prefHeight="25.0" prefWidth="327.0" promptText="Título">
+                  <ComboBox id="tipoProduto" fx:id="tipoProduto" layoutY="14.0" prefWidth="150.0" />
+                  <TextField id="titulo" fx:id="titulo" layoutX="1.0" layoutY="52.0" prefHeight="25.0" prefWidth="327.0" promptText="Título">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="1.0" layoutY="86.0" prefHeight="25.0" prefWidth="327.0" promptText="Autor/Banda">
+                  <TextField id="autorBanda" fx:id="autorBanda" layoutX="1.0" layoutY="86.0" prefHeight="25.0" prefWidth="327.0" promptText="Autor/Banda">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="1.0" layoutY="120.0" prefHeight="25.0" prefWidth="327.0" promptText="Categoria">
+                  <TextField id="categoria" fx:id="categoria" layoutX="1.0" layoutY="120.0" prefHeight="25.0" prefWidth="327.0" promptText="Categoria">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="1.0" layoutY="153.0" prefHeight="25.0" prefWidth="327.0" promptText="Unidades">
+                  <TextField id="unidades" fx:id="unidades" layoutX="1.0" layoutY="153.0" prefHeight="25.0" prefWidth="327.0" promptText="Unidades">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="1.0" layoutY="186.0" prefHeight="25.0" prefWidth="327.0" promptText="Páginas">
+                  <TextField id="paginas" fx:id="paginas" layoutX="1.0" layoutY="186.0" prefHeight="25.0" prefWidth="327.0" promptText="Páginas">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="1.0" layoutY="219.0" prefHeight="25.0" prefWidth="327.0" promptText="Ano de publicação">
+                  <TextField id="anoPublicacao" fx:id="anoPublicacao" layoutX="1.0" layoutY="219.0" prefHeight="25.0" prefWidth="327.0" promptText="Ano de publicação">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="1.0" layoutY="252.0" prefHeight="25.0" prefWidth="327.0" promptText="Valor">
+                  <TextField id="valor" fx:id="valor" layoutX="1.0" layoutY="252.0" prefHeight="25.0" prefWidth="327.0" promptText="Valor">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="1.0" layoutY="288.0" mnemonicParsing="false" style="-fx-background-color: #769CEE;" text="Atualizar" textFill="WHITE">
+                  <Button layoutX="1.0" layoutY="288.0" mnemonicParsing="false" onAction="#atualizarButton" style="-fx-background-color: #769CEE;" text="Atualizar" textFill="WHITE">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="264.0" layoutY="288.0" mnemonicParsing="false" style="-fx-background-color: #769CEE;" text="Deletar" textFill="WHITE">
+                  <Button layoutX="264.0" layoutY="288.0" mnemonicParsing="false" onAction="#deletarButton" style="-fx-background-color: #769CEE;" text="Deletar" textFill="WHITE">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="131.0" layoutY="288.0" mnemonicParsing="false" style="-fx-background-color: #769CEE;" text="Adicionar" textFill="WHITE">
+                  <Button layoutX="131.0" layoutY="288.0" mnemonicParsing="false" onAction="#adicionarButton" style="-fx-background-color: #769CEE;" text="Adicionar" textFill="WHITE">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>

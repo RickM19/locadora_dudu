@@ -48,7 +48,7 @@ public class DiscoServiceImpl implements DiscoService{
     @Override
     public void cadastrar(Disco disco){
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
         Disco discoEncontrado = discoRp.findByTitle(disco);
@@ -61,7 +61,7 @@ public class DiscoServiceImpl implements DiscoService{
     @Override
     public void excluir(Disco d) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
         Disco discoEncontrado = discoRp.findById(d);
@@ -73,14 +73,20 @@ public class DiscoServiceImpl implements DiscoService{
     @Override
     public void alterarEstoque(Disco d) {
         Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
-        if (usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
             throw new SecurityException("Acesso negado!");
         }
         Disco discoEncontrado = discoRp.findById(d);
         if(discoEncontrado == null) {
             throw new IllegalArgumentException("Disco inexistente!");
         }
+        int antigaQtdExemplares = discoEncontrado.getExemplares();
+        int diferenca = d.getExemplares() - antigaQtdExemplares;
+        int novosDisponiveis = discoEncontrado.getQtdDisponivelAluguel() + diferenca;
+        int novaQtdDisponivelAluguel = Math.max(novosDisponiveis, 0);
+
         discoEncontrado.setQtdExemplares(d.getExemplares());
+        discoEncontrado.setQtdDisponivelAluguel(novaQtdDisponivelAluguel);
         discoRp.update(discoEncontrado);
 
     }

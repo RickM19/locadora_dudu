@@ -23,6 +23,7 @@ public class Livro extends Produto {
 	public String getAutor() {
 		return autor;
 	}
+	public String getAutorBanda() { return autor; }
 	public int getAnoPublicacao() {
 		return anoPublicacao;
 	}
@@ -47,6 +48,7 @@ public class Livro extends Produto {
 		this.qtdPaginas = qtdPaginas;
 
 	}
+
 	public Livro(){};
 	public Livro(
 			String titulo, 
