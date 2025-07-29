@@ -187,4 +187,5 @@ alert.showAndWait();
     public void relatoriosButton(){ProjetoDudu.relatorios();}
     public void alugueisButton(){ProjetoDudu.alugueis();}
     public void produtosButton(){ProjetoDudu.produtos();}
+    public void cadastroButton(){ProjetoDudu.cadastro();}
 }

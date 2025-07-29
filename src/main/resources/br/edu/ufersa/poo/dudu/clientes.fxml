@@ -45,11 +45,16 @@
                                 <Font name="Book Antiqua" size="14.0" />
                             </font>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" layoutX="8.0" layoutY="205.0" mnemonicParsing="false" onAction="#sairButton" style="-fx-background-color: #5c5fc9;" text="Sair" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <Button alignment="BASELINE_LEFT" layoutY="233.0" mnemonicParsing="false" onAction="#sairButton" style="-fx-background-color: #5c5fc9;" text="Sair" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                             <font>
                                 <Font name="Book Antiqua" size="14.0" />
                             </font>
                         </Button>
+                  <Button alignment="BASELINE_LEFT" layoutX="7.0" layoutY="205.0" mnemonicParsing="false" onAction="#cadastroButton" style="-fx-background-color: #5c5fc9;" text="Cadastrar" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="Book Antiqua" size="14.0" />
+                     </font>
+                  </Button>
                     </children>
                 </AnchorPane>
             <TextField fx:id="buscar" layoutX="221.0" layoutY="14.0" prefHeight="28.0" prefWidth="550.0" promptText="Buscar">

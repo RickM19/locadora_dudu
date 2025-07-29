@@ -1,13 +1,19 @@
 package br.edu.ufersa.poo.dudu.view;
 
 import br.edu.ufersa.poo.dudu.HelloApplication;
+import br.edu.ufersa.poo.dudu.model.entities.Usuario;
+import br.edu.ufersa.poo.dudu.model.enums.TipoUsuario;
 import br.edu.ufersa.poo.dudu.util.DatabaseSeeder;
+import br.edu.ufersa.poo.dudu.util.Session;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+
 
 public class ProjetoDudu extends Application {
     public static Stage stage;
@@ -40,7 +46,17 @@ public class ProjetoDudu extends Application {
         loadTela("alugueis.fxml");
     }
     public static void cadastro(){
-        loadTela("cadastro.fxml");
+        Session sessionInstance = Session.getInstance();
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
+        if(usuarioLogado.getTipoUsuario() == TipoUsuario.ADMIN)
+            loadTela("cadastro.fxml");
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Acesso negado!");
+            alert.setHeaderText(null);
+            alert.setContentText("Apenas o administrador pode acessar essa tela.");
+            alert.showAndWait();
+        }
     }
     public static void produtos(){
         loadTela("produtos.fxml");

@@ -261,4 +261,5 @@ public class ProdutosController {
         userService.deslogar();
         ProjetoDudu.telaLogin();
     }
+    public void cadastroButton(){ProjetoDudu.cadastro();}
 }
