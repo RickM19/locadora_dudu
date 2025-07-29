@@ -45,4 +45,12 @@ public class ClienteServiceImpl implements ClienteService{
             throw new IllegalArgumentException("Cliente inexistente!");
         clienteRp.delete(clienteEncontrado);
     }
+
+    @Override
+    public void atualizar(Cliente c){
+        Cliente clienteEncontrado = clienteRp.findByCpf(c);
+        if(clienteEncontrado==null)
+            throw new IllegalArgumentException("Cliente inexistente!");
+        clienteRp.update(clienteEncontrado);
+    }
 }
