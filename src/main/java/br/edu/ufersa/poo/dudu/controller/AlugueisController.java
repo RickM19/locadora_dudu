@@ -341,4 +341,5 @@ public class AlugueisController {
         userService.deslogar();
         ProjetoDudu.telaLogin();
     }
+    public void cadastroButton(){ProjetoDudu.cadastro();}
 }
