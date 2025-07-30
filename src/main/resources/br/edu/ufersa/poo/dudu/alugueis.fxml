@@ -46,6 +46,11 @@
                   <Font name="Book Antiqua" size="14.0" />
                </font>
             </Button>
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#cadastroButton" prefHeight="0.0" prefWidth="200.0" style="-fx-background-color: #5c5fc9;" text="Cadastrar" textFill="WHITE">
+               <font>
+                  <Font name="Book Antiqua" size="14.0" />
+               </font>
+            </Button>
             <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#sair" prefHeight="0.0" prefWidth="200.0" style="-fx-background-color: #5c5fc9;" text="Sair" textFill="WHITE">
                <font>
                   <Font name="Book Antiqua" size="14.0" />
