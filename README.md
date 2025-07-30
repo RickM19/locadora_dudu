@@ -14,3 +14,8 @@
 Ao rodar pela primeira vez o usuário gerado pelo seed é o:
 - Login: Dudu
 - senha: dudu4321
+
+# Patterns utilizados:
+- Singleton para criar uma unica instancia da classe Session
+- Factory Method para encapsular a criaçao de instancias de Disco ou Livro no cadastro de produtos
+- Strategy utilizado em conjunto do Factory Method para encapsular a definiçao dos atributos das instâncias criadas pelo Factory
