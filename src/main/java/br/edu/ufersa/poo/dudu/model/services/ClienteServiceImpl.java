@@ -51,6 +51,8 @@ public class ClienteServiceImpl implements ClienteService{
         Cliente clienteEncontrado = clienteRp.findByCpf(c);
         if(clienteEncontrado==null)
             throw new IllegalArgumentException("Cliente inexistente!");
+        clienteEncontrado.setNome(c.getNome());
+        clienteEncontrado.setEndereco(c.getEndereco());
         clienteRp.update(clienteEncontrado);
     }
 }
