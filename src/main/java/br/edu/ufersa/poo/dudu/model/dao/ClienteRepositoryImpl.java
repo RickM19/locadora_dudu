@@ -1,6 +1,7 @@
 package br.edu.ufersa.poo.dudu.model.dao;
 
 import br.edu.ufersa.poo.dudu.model.entities.Cliente;
+import br.edu.ufersa.poo.dudu.model.entities.Livro;
 import br.edu.ufersa.poo.dudu.util.JPAUtil;
 import jakarta.persistence.*;
 
@@ -22,7 +23,9 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     @Override
     public Cliente findByName(Cliente c){
         try (EntityManager em = emf.createEntityManager()) {
-            return em.find(Cliente.class, c.getNome());
+            TypedQuery<Cliente> q = em.createQuery("SELECT c from Cliente c WHERE c.nome = :e", Cliente.class);
+            q.setParameter("e", c.getNome());
+            return q.getResultStream().findFirst().orElse(null);
         }catch (Throwable e) {
             System.err.println("Falha ao criar EntityManager " + e);
             throw new RuntimeException(e);
