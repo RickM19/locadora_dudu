@@ -44,6 +44,9 @@ public class AluguelServiceImpl implements AluguelService {
         Aluguel aluguelEncontrado = aluguelRepo.findById(aluguel);
         if(aluguelEncontrado == null)
             throw new IllegalArgumentException("Aluguel inexistente!");
+        aluguelEncontrado.setItem(aluguel.getItem());
+        aluguelEncontrado.setDataFim(aluguel.getDataFim());
+        aluguelEncontrado.setValorTotal(aluguel.getValorTotal());
         aluguelRepo.update(aluguelEncontrado);
     }
 

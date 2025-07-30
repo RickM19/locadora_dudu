@@ -91,13 +91,13 @@
                   <ComboBox fx:id="tipoField" layoutY="425.0" prefHeight="28.0" prefWidth="560.0" promptText="Tipo do Produto" style="-fx-font-family: 'Book Antiqua'; -fx-font-size: 14;" />
                   <HBox alignment="CENTER_LEFT" layoutY="542.0" prefHeight="28.0" prefWidth="560.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#cadastrarAluguel" style="-fx-background-color: #769CEE;" text="Cadastrar Aluguel" textFill="WHITE">
+                        <Button fx:id="botaoCadastrar" mnemonicParsing="false" onAction="#cadastrarAluguel" style="-fx-background-color: #769CEE;" text="Cadastrar Aluguel" textFill="WHITE">
                            <font>
                               <Font name="Book Antiqua" size="14.0" />
                            </font>
                         </Button>
                         <Pane layoutX="256.0" layoutY="10.0" prefHeight="28.0" prefWidth="10.0" />
-                        <Button mnemonicParsing="false" onAction="#atualizarAluguel" style="-fx-background-color: #769CEE;" text="Atualizar Aluguel" textFill="WHITE">
+                        <Button fx:id="botaoAtualizar" mnemonicParsing="false" onAction="#atualizarAluguel" style="-fx-background-color: #769CEE;" text="Atualizar Aluguel" textFill="WHITE">
                            <font>
                               <Font name="Book Antiqua" size="14.0" />
                            </font>

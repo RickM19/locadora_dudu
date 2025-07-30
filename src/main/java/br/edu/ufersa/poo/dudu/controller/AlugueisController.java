@@ -35,6 +35,8 @@ public class AlugueisController {
     @FXML private DatePicker dataFimField;
 
     @FXML private Button botaoFinalizar;
+    @FXML private Button botaoCadastrar;
+    @FXML private Button botaoAtualizar;
 
     private final AluguelService aluguelService = new AluguelServiceImpl();
     private final ObservableList<Aluguel> aluguelList = FXCollections.observableArrayList();
@@ -82,7 +84,7 @@ public class AlugueisController {
 
         LocalDate dataInicio = LocalDate.now();
         LocalDate dataFim = dataFimField.getValue();
-        long dias = ChronoUnit.DAYS.between(dataInicio, dataFim);
+        long dias = ChronoUnit.WEEKS.between(dataInicio, dataFim);
         double valorTotal = dias * produtoEncontrado.getValorAluguel();
 
         aluguel.setCliente(clienteEncontrado);
@@ -163,11 +165,31 @@ public class AlugueisController {
 
     private void mostrarDadosAluguel(Aluguel aluguel){
         if(aluguel != null){
+            boolean isFinalizado = aluguel.getFinalizado();
+
             nomeClienteField.setText(aluguel.getCliente().getNome());
             tituloField.setText(aluguel.getItem().getTitulo());
-            botaoFinalizar.setDisable(aluguel.getFinalizado());
+            tipoField.setValue(TipoProduto.valueOf(aluguel.getItem().getTipo()));
+            dataFimField.setValue(aluguel.getDataFim());
+
+            nomeClienteField.setDisable(isFinalizado);
+            tituloField.setDisable(isFinalizado);
+            tipoField.setDisable(isFinalizado);
+            dataFimField.setDisable(isFinalizado);
+
+            botaoCadastrar.setDisable(isFinalizado);
+            botaoAtualizar.setDisable(isFinalizado);
+            botaoFinalizar.setDisable(isFinalizado);
         }else {
             limparCampos();
+
+            nomeClienteField.setDisable(false);
+            tituloField.setDisable(false);
+            tipoField.setDisable(false);
+            dataFimField.setDisable(false);
+
+            botaoCadastrar.setDisable(false);
+            botaoCadastrar.setDisable(false);
             botaoFinalizar.setDisable(true);
         }
     }
@@ -223,6 +245,12 @@ public class AlugueisController {
                     "Selecione um aluguel na tabela.");
         else{
             try {
+                if (aluguelSelecionado.getFinalizado()) {
+                    showAlert(Alert.AlertType.WARNING, "Aluguel já finalizado",
+                            "Não é possível editar um aluguel já finalizado.");
+                    return;
+                }
+
                 Aluguel aluguelParaAtualizar = aluguelService.buscarPorId(aluguelSelecionado);
                 preencherCampos(aluguelParaAtualizar);
 
