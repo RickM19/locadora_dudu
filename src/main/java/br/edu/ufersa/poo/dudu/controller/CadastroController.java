@@ -36,6 +36,7 @@ public class CadastroController {
         userCadastro.setNomeUsuario(usuario.getText());
         userCadastro.setSenha(senha.getText());
         userCadastro.setEmail(email.getText());
+        userCadastro.setTipoUsuario(usuario.getText());
         try {
             service.cadastrar(userCadastro);
             JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
