@@ -69,6 +69,8 @@
                       <TableColumn fx:id="colItem" prefWidth="75.0" text="Item Alugado" />
                         <TableColumn fx:id="colDataInicio" prefWidth="75.0" text="Data de Início" />
                         <TableColumn fx:id="colDataFim" prefWidth="75.0" text="Data de Fim" />
+                        <TableColumn fx:id="colValorTotal" prefWidth="75.0" text="Valor Total" />
+                        <TableColumn fx:id="colFinalizado" prefWidth="75.0" text="Finalizado?" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -80,13 +82,13 @@
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <DatePicker fx:id="dataFimField" layoutY="495.0" prefHeight="28.0" prefWidth="560.0" promptText="Data de Fim" />
+                  <DatePicker fx:id="dataFimField" layoutY="495.0" prefHeight="28.0" prefWidth="560.0" promptText="Data de Fim" style="-fx-font-family: 'Book Antiqua'; -fx-font-size: 14;" />
                   <TextField fx:id="nomeClienteField" layoutY="390.0" prefHeight="28.0" prefWidth="560.0" promptText="Nome do Cliente">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <ComboBox fx:id="tipoField" layoutY="425.0" prefHeight="28.0" prefWidth="560.0" promptText="Tipo do Produto" />
+                  <ComboBox fx:id="tipoField" layoutY="425.0" prefHeight="28.0" prefWidth="560.0" promptText="Tipo do Produto" style="-fx-font-family: 'Book Antiqua'; -fx-font-size: 14;" />
                   <HBox alignment="CENTER_LEFT" layoutY="542.0" prefHeight="28.0" prefWidth="560.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#cadastrarAluguel" style="-fx-background-color: #769CEE;" text="Cadastrar Aluguel" textFill="WHITE">
@@ -102,6 +104,12 @@
                         </Button>
                         <Pane prefHeight="28.0" prefWidth="10.0" />
                         <Button mnemonicParsing="false" onAction="#excluirAluguel" style="-fx-background-color: #769CEE;" text="Excluir Aluguel" textFill="WHITE">
+                           <font>
+                              <Font name="Book Antiqua" size="14.0" />
+                           </font>
+                        </Button>
+                        <Pane layoutX="287.0" layoutY="10.0" prefHeight="28.0" prefWidth="10.0" />
+                        <Button fx:id="botaoFinalizar" disable="true" layoutX="297.0" layoutY="10.0" mnemonicParsing="false" onAction="#finalizarAluguel" style="-fx-background-color: #769CEE;" text="Finalizar Aluguel" textFill="WHITE">
                            <font>
                               <Font name="Book Antiqua" size="14.0" />
                            </font>

@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
@@ -25,6 +24,8 @@ public class AlugueisController {
     @FXML private TableColumn<Aluguel, String> colItem;
     @FXML private TableColumn<Aluguel, String> colDataInicio;
     @FXML private TableColumn<Aluguel, String> colDataFim;
+    @FXML private TableColumn<Aluguel, String> colValorTotal;
+    @FXML private TableColumn<Aluguel, String> colFinalizado;
 
     @FXML private TextField consultaField;
 
@@ -38,7 +39,9 @@ public class AlugueisController {
     private final AluguelService aluguelService = new AluguelServiceImpl();
     private final ObservableList<Aluguel> aluguelList = FXCollections.observableArrayList();
     private Aluguel novoAluguel = new Aluguel();
-    private boolean modoEdicao = false;
+
+    private final LivroService livroService = new LivroServiceImpl();
+    private final DiscoService discoService = new DiscoServiceImpl();
 
     private void showAlert(Alert.AlertType type, String titulo, String mensagem){
         Alert alert = new Alert(type);
@@ -47,29 +50,34 @@ public class AlugueisController {
         alert.showAndWait();
     }
 
-    private void preencherCampos(){
+    private void preencherCampos(Aluguel aluguel){
         final ClienteService clienteService = new ClienteServiceImpl();
 
         Produto produtoEncontrado;
         String titulo = tituloField.getText();
         switch (tipoField.getValue()){
             case DISCO:
-                final DiscoService discoService = new DiscoServiceImpl();
+                Disco discoOriginal = (Disco) aluguel.getItem();
                 Disco discoTemp = new Disco();
+
+                if(discoOriginal != null) discoService.devolver(discoOriginal);
                 discoTemp.setTitulo(titulo);
                 produtoEncontrado = discoService.buscarPorTitulo(discoTemp);
+                discoService.alugar((Disco) produtoEncontrado);
                 break;
             case LIVRO:
-                final LivroService livroService = new LivroServiceImpl();
                 Livro livroTemp = new Livro();
+
                 livroTemp.setTitulo(titulo);
                 produtoEncontrado = livroService.buscarPorTitulo(livroTemp);
+                livroService.alugar((Livro) produtoEncontrado);
                 break;
             default:
                 throw new IllegalArgumentException("Tipo inválido!");
         }
 
-        Cliente clienteTemp = new Cliente(nomeClienteField.getText(), "cpf", "endereço");
+        Cliente clienteTemp = new Cliente();
+        clienteTemp.setNome(nomeClienteField.getText());
         Cliente clienteEncontrado = clienteService.buscarPorNome(clienteTemp);
 
         LocalDate dataInicio = LocalDate.now();
@@ -77,13 +85,12 @@ public class AlugueisController {
         long dias = ChronoUnit.DAYS.between(dataInicio, dataFim);
         double valorTotal = dias * produtoEncontrado.getValorAluguel();
 
-        novoAluguel = new Aluguel(
-                clienteEncontrado,
-                produtoEncontrado,
-                dataInicio,
-                dataFim,
-                valorTotal,
-                false);
+        aluguel.setCliente(clienteEncontrado);
+        aluguel.setItem(produtoEncontrado);
+        aluguel.setDataInicio(dataInicio);
+        aluguel.setDataFim(dataFim);
+        aluguel.setValorTotal(valorTotal);
+        aluguel.setFinalizado(false);
     }
     private void limparCampos() {
         nomeClienteField.clear();
@@ -94,13 +101,18 @@ public class AlugueisController {
     }
 
     private void configurarTabela(){
-        colCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
+        colCliente.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getCliente().getNome()));
         colItem.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getItemAlugado().getTitulo()));
+                new SimpleStringProperty(cellData.getValue().getItem().getTitulo()));
         colDataInicio.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDataInicio().toString()));
         colDataFim.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getDataFim().toString()));
+        colValorTotal.setCellValueFactory(cellData ->
+                new SimpleStringProperty(String.format("R$ %.2f", cellData.getValue().getValorTotal())));
+        colFinalizado.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getFinalizado() ? "Sim" : "Não"));
 
         carregarAlugueis();
     }
@@ -142,7 +154,7 @@ public class AlugueisController {
     private void configurarPesquisa(){
         aluguelTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) ->
-                        mostrarDadosAluguel(newValue));
+                    mostrarDadosAluguel(newValue));
         carregarAlugueis();
         consultaField.textProperty().addListener(
                 (observable, oldValue, newValue) ->
@@ -152,9 +164,11 @@ public class AlugueisController {
     private void mostrarDadosAluguel(Aluguel aluguel){
         if(aluguel != null){
             nomeClienteField.setText(aluguel.getCliente().getNome());
-            tituloField.setText(aluguel.getItemAlugado().getTitulo());
+            tituloField.setText(aluguel.getItem().getTitulo());
+            botaoFinalizar.setDisable(aluguel.getFinalizado());
         }else {
             limparCampos();
+            botaoFinalizar.setDisable(true);
         }
     }
     private void realizarPesquisa(String termo){
@@ -165,8 +179,8 @@ public class AlugueisController {
             List<Aluguel> achados = aluguelList.stream().filter(aluguel ->
                             (aluguel.getCliente() != null &&
                                     aluguel.getCliente().getNome().toLowerCase().contains(textoBusca)) ||
-                                    (aluguel.getItemAlugado() != null &&
-                                            aluguel.getItemAlugado().getTitulo().toLowerCase().contains(textoBusca)))
+                                    (aluguel.getItem() != null &&
+                                            aluguel.getItem().getTitulo().toLowerCase().contains(textoBusca)))
                     .collect(Collectors.toList());
             aluguelTable.setItems(FXCollections.observableArrayList(achados));
         }
@@ -175,15 +189,16 @@ public class AlugueisController {
     @FXML
     void initialize(){
         configurarTabela();
-
         configurarTipo();
         configurarPesquisa();
+
+        botaoFinalizar.setDisable(true);
     }
 
     @FXML
     void cadastrarAluguel(ActionEvent event) {
         try {
-            preencherCampos();
+            preencherCampos(novoAluguel);
 
             aluguelService.cadastrar(novoAluguel);
 
@@ -197,7 +212,6 @@ public class AlugueisController {
         catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Erro ao adicionar aluguel",
                     "Não foi possível cadastrar o aluguel: " + e.getMessage());
-            System.out.println(e.getMessage());
         }
     }
 
@@ -209,9 +223,10 @@ public class AlugueisController {
                     "Selecione um aluguel na tabela.");
         else{
             try {
-                preencherCampos();
+                Aluguel aluguelParaAtualizar = aluguelService.buscarPorId(aluguelSelecionado);
+                preencherCampos(aluguelParaAtualizar);
 
-                aluguelService.atualizar(novoAluguel);
+                aluguelService.atualizar(aluguelParaAtualizar);
 
                 showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Aluguel atualizado com sucesso!");
                 carregarAlugueis();
@@ -221,9 +236,8 @@ public class AlugueisController {
                 showAlert(Alert.AlertType.WARNING, "Erro de Validação", e.getMessage());
             }
             catch (Exception e) {
-                showAlert(Alert.AlertType.ERROR, "Erro ao adicionar aluguel",
-                        "Não foi possível cadastrar o aluguel: " + e.getMessage());
-                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Erro ao atualizar aluguel",
+                        "Não foi possível atualizar o aluguel: " + e.getMessage());
             }
         }
     }
@@ -236,6 +250,18 @@ public class AlugueisController {
                     "Selecione um aluguel na tabela.");
         else {
             try {
+                switch (TipoProduto.valueOf(aluguelSelecionado.getItem().getTipo())){
+                    case DISCO:
+                        Disco discoEncontrado = (Disco) aluguelSelecionado.getItem();
+                        discoService.devolver(discoEncontrado);
+                        break;
+                    case LIVRO:
+                        Livro livroEncontrado = (Livro) aluguelSelecionado.getItem();
+                        livroService.devolver(livroEncontrado);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Tipo inválido!");
+                }
                 aluguelService.excluir(aluguelSelecionado);
                 showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Aluguel deletado com sucesso!");
                 carregarAlugueis();
@@ -252,8 +278,31 @@ public class AlugueisController {
     }
 
     @FXML
-    void finalizarAluguel(ActionEvent event){
+    void finalizarAluguel(ActionEvent event) {
+        Aluguel aluguelSelecionado = aluguelTable.getSelectionModel().getSelectedItem();
+        if (aluguelSelecionado == null)
+            showAlert(Alert.AlertType.WARNING, "Nenhum aluguel selecionado",
+                    "Selecione um aluguel na tabela para finalizar.");
+        else {
+            try {
+                Aluguel aluguelParaFinalizar = aluguelService.buscarPorId(aluguelSelecionado);
 
+                switch (TipoProduto.valueOf(aluguelParaFinalizar.getItem().getTipo())) {
+                    case DISCO -> discoService.devolver((Disco) aluguelParaFinalizar.getItem());
+                    case LIVRO -> livroService.devolver((Livro) aluguelParaFinalizar.getItem());
+                }
+
+                aluguelService.finalizar(aluguelParaFinalizar);
+
+                showAlert(Alert.AlertType.INFORMATION, "Sucesso", "Aluguel finalizado com sucesso!");
+                carregarAlugueis();
+                limparCampos();
+            }
+            catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Erro ao finalizar aluguel",
+                        "Não foi possível finalizar o aluguel: " + e.getMessage());
+            }
+        }
     }
 
     @FXML void abrirClientes(ActionEvent event) { ProjetoDudu.clientes(); }

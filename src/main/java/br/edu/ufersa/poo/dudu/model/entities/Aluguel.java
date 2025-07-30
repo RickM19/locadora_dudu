@@ -17,7 +17,7 @@ public class Aluguel {
 
 	@ManyToOne
 	@JoinColumn(name = "id_produto", nullable = false)
-	private Produto itemAlugado;
+	private Produto item;
 
 	@Column(nullable = false)
 	private LocalDate dataInicio;
@@ -38,7 +38,7 @@ public class Aluguel {
 	public Cliente getCliente() {
 		return this.cliente;
 	}
-	public Produto getItemAlugado() { return this.itemAlugado; }
+	public Produto getItem() { return this.item; }
 	public LocalDate getDataInicio() {
 		return this.dataInicio;
 	}
@@ -57,8 +57,8 @@ public class Aluguel {
 		if (cliente != null) this.cliente = cliente;
 		else throw new IllegalArgumentException("O Cliente está vazio.");
 	}
-	public void setItemAlugado(Produto itemAlugado) {
-		if(itemAlugado != null) this.itemAlugado = itemAlugado;
+	public void setItem(Produto item) {
+		if(item != null) this.item = item;
 		else throw new IllegalArgumentException("O Produto está vazio.");
 	}
 	public void setDataInicio(LocalDate dataInicio) {
@@ -79,10 +79,10 @@ public class Aluguel {
 
 	//Construtores
 	public Aluguel(){}
-	public Aluguel(Cliente cliente, Produto itemAlugado, LocalDate dataInicio, LocalDate dataFim, double valorTotal,
+	public Aluguel(Cliente cliente, Produto item, LocalDate dataInicio, LocalDate dataFim, double valorTotal,
 				   boolean finalizado) {
 		setCliente(cliente);
-		setItemAlugado(itemAlugado);
+		setItem(item);
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
 		setValorTotal(valorTotal);
