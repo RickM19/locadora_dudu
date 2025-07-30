@@ -183,12 +183,7 @@ public class AlugueisController {
             tipoField.setValue(TipoProduto.valueOf(aluguel.getItem().getTipo()));
             dataFimField.setValue(aluguel.getDataFim());
 
-            nomeClienteField.setDisable(isFinalizado);
-            tituloField.setDisable(isFinalizado);
-            tipoField.setDisable(isFinalizado);
-            dataFimField.setDisable(isFinalizado);
 
-            botaoCadastrar.setDisable(isFinalizado);
             botaoAtualizar.setDisable(isFinalizado);
             botaoFinalizar.setDisable(isFinalizado);
             botaoExcluir.setDisable(isFinalizado);

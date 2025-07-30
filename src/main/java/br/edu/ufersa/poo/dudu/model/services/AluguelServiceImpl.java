@@ -4,12 +4,14 @@ import br.edu.ufersa.poo.dudu.model.dao.AluguelRepository;
 import br.edu.ufersa.poo.dudu.model.dao.AluguelRepositoryImpl;
 import br.edu.ufersa.poo.dudu.model.entities.Aluguel;
 import br.edu.ufersa.poo.dudu.model.entities.Cliente;
+import br.edu.ufersa.poo.dudu.util.Session;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class AluguelServiceImpl implements AluguelService {
     private final AluguelRepository aluguelRepo = new AluguelRepositoryImpl();
+    private final Session sessionInstance = Session.getInstance();
 
     @Override
     public Aluguel buscarPorId(Aluguel aluguel) { return aluguelRepo.findById(aluguel); }
@@ -33,6 +35,9 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public void excluir(Aluguel aluguel) {
+        if(sessionInstance.sessaoExpirada()) {
+            throw new IllegalStateException("A sua sessão expirou, entre novamente!");
+        }
         if(aluguel != null && aluguelRepo.findById(aluguel) != null)
             aluguelRepo.delete(aluguel);
         else
@@ -41,6 +46,9 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public void atualizar(Aluguel aluguel) {
+        if(sessionInstance.sessaoExpirada()) {
+            throw new IllegalStateException("A sua sessão expirou, entre novamente!");
+        }
         Aluguel aluguelEncontrado = aluguelRepo.findById(aluguel);
         if(aluguelEncontrado == null)
             throw new IllegalArgumentException("Aluguel inexistente!");
@@ -52,6 +60,9 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public void finalizar(Aluguel aluguel) {
+        if(sessionInstance.sessaoExpirada()) {
+            throw new IllegalStateException("A sua sessão expirou, entre novamente!");
+        }
         if(aluguel != null && aluguelRepo.findById(aluguel) != null) {
             if (!aluguel.getFinalizado()) {
                 aluguel.setFinalizado(true);
@@ -66,6 +77,9 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public void cadastrar(Aluguel aluguel) {
+        if(sessionInstance.sessaoExpirada()) {
+            throw new IllegalStateException("A sua sessão expirou, entre novamente!");
+        }
         if(aluguel != null) {
             if (aluguelRepo.findById(aluguel) != null)
                 throw new IllegalArgumentException("Esse aluguel já está cadastrado.");

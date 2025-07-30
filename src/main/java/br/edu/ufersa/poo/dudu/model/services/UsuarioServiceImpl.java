@@ -4,6 +4,7 @@ import br.edu.ufersa.poo.dudu.exceptions.AuthenticationException;
 import br.edu.ufersa.poo.dudu.model.dao.UsuarioRepository;
 import br.edu.ufersa.poo.dudu.model.dao.UsuarioRepositoryImpl;
 import br.edu.ufersa.poo.dudu.model.entities.Usuario;
+import br.edu.ufersa.poo.dudu.model.enums.TipoUsuario;
 import br.edu.ufersa.poo.dudu.util.Session;
 
 import java.util.List;
@@ -37,6 +38,10 @@ public class UsuarioServiceImpl implements UserService {
 
     @Override
     public void cadastrar(Usuario u) {
+        Usuario usuarioLogado = sessionInstance.getUsuarioLogado();
+        if (usuarioLogado == null || usuarioLogado.getTipoUsuario() != TipoUsuario.ADMIN) {
+            throw new SecurityException("Acesso negado!");
+        }
         if(usuarioRepo.findByUserName(u) != null) {
             throw new IllegalArgumentException("Usuário já cadastrado!");
         }

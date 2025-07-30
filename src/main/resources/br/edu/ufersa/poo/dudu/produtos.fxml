@@ -112,7 +112,7 @@
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="1.0" layoutY="288.0" mnemonicParsing="false" onAction="#atualizarButton" style="-fx-background-color: #769CEE;" text="Atualizar" textFill="WHITE">
+                  <Button layoutX="1.0" layoutY="288.0" mnemonicParsing="false" onAction="#atualizarButton" prefHeight="28.0" prefWidth="134.0" style="-fx-background-color: #769CEE;" text="Alterar Estoque" textFill="WHITE">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
@@ -122,7 +122,7 @@
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
                   </Button>
-                  <Button layoutX="131.0" layoutY="288.0" mnemonicParsing="false" onAction="#adicionarButton" style="-fx-background-color: #769CEE;" text="Adicionar" textFill="WHITE">
+                  <Button layoutX="165.0" layoutY="288.0" mnemonicParsing="false" onAction="#adicionarButton" style="-fx-background-color: #769CEE;" text="Adicionar" textFill="WHITE">
                      <font>
                         <Font name="Book Antiqua" size="14.0" />
                      </font>
