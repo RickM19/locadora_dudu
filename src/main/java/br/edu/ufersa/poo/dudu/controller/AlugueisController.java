@@ -37,6 +37,7 @@ public class AlugueisController {
     @FXML private Button botaoFinalizar;
     @FXML private Button botaoCadastrar;
     @FXML private Button botaoAtualizar;
+    @FXML private Button botaoExcluir;
 
     private final AluguelService aluguelService = new AluguelServiceImpl();
     private final ObservableList<Aluguel> aluguelList = FXCollections.observableArrayList();
@@ -54,6 +55,12 @@ public class AlugueisController {
 
     private void preencherCampos(Aluguel aluguel){
         final ClienteService clienteService = new ClienteServiceImpl();
+        Cliente clienteTemp = new Cliente();
+        clienteTemp.setNome(nomeClienteField.getText());
+        Cliente clienteEncontrado = clienteService.buscarPorNome(clienteTemp);
+        if(clienteEncontrado == null) {
+            throw new IllegalArgumentException("Cliente inexistente!");
+        }
 
         Produto produtoEncontrado;
         String titulo = tituloField.getText();
@@ -65,6 +72,9 @@ public class AlugueisController {
                 if(discoOriginal != null) discoService.devolver(discoOriginal);
                 discoTemp.setTitulo(titulo);
                 produtoEncontrado = discoService.buscarPorTitulo(discoTemp);
+                if(produtoEncontrado == null) {
+                    throw new IllegalArgumentException("Produto inexistente!");
+                }
                 discoService.alugar((Disco) produtoEncontrado);
                 break;
             case LIVRO:
@@ -72,15 +82,16 @@ public class AlugueisController {
 
                 livroTemp.setTitulo(titulo);
                 produtoEncontrado = livroService.buscarPorTitulo(livroTemp);
+                if(produtoEncontrado == null) {
+                    throw new IllegalArgumentException("Produto inexistente!");
+                }
                 livroService.alugar((Livro) produtoEncontrado);
                 break;
             default:
                 throw new IllegalArgumentException("Tipo inválido!");
         }
 
-        Cliente clienteTemp = new Cliente();
-        clienteTemp.setNome(nomeClienteField.getText());
-        Cliente clienteEncontrado = clienteService.buscarPorNome(clienteTemp);
+
 
         LocalDate dataInicio = LocalDate.now();
         LocalDate dataFim = dataFimField.getValue();
@@ -180,6 +191,7 @@ public class AlugueisController {
             botaoCadastrar.setDisable(isFinalizado);
             botaoAtualizar.setDisable(isFinalizado);
             botaoFinalizar.setDisable(isFinalizado);
+            botaoExcluir.setDisable(isFinalizado);
         }else {
             limparCampos();
 

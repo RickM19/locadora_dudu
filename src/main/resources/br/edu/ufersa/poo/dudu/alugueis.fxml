@@ -108,7 +108,7 @@
                            </font>
                         </Button>
                         <Pane prefHeight="28.0" prefWidth="10.0" />
-                        <Button mnemonicParsing="false" onAction="#excluirAluguel" style="-fx-background-color: #769CEE;" text="Excluir Aluguel" textFill="WHITE">
+                        <Button fx:id="botaoExcluir" mnemonicParsing="false" onAction="#excluirAluguel" style="-fx-background-color: #769CEE;" text="Excluir Aluguel" textFill="WHITE">
                            <font>
                               <Font name="Book Antiqua" size="14.0" />
                            </font>
